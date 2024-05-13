@@ -43,10 +43,11 @@ Med-Eval具有如下特点：
 ```
 @misc{
       title={Med-Eval: Benchmarks for the Medical Large Language Model },
-      author={Jinhua Du and Jingyi Ren and Xinyi Li and Tianying Tang and Yanuo Zhou and Feng Qiu and Hao Yin},
+      author={Jinhua Du and Jingyi Ren and Xinyi Li and Tianying Tang and Yanuo Zhou and Feng Qiu},
       year={2023},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+      publisher = {GitHub},
+      journal = {GitHub repository},
+      howpublished = {\url{https://github.com/dujh22/Med-Eval}}
 }
 ```
 
