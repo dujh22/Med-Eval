@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>全球开源开放大模型发展情况 - Med-Eval</title><meta name="author" content="">
+<meta name="description" content="开源开放的大模型 旨在记录全球开源开放大模型发展情况
+">
+  <meta itemprop="name" content="全球开源开放大模型发展情况">
+  <meta itemprop="description" content="开源开放的大模型 旨在记录全球开源开放大模型发展情况">
+  <meta itemprop="datePublished" content="2023-12-19T14:43:38+08:00">
+  <meta itemprop="dateModified" content="2023-12-19T14:43:38+08:00">
+  <meta itemprop="wordCount" content="155"><meta property="og:url" content="https://dujh22.github.io/model/%E5%85%A8%E7%90%83%E5%BC%80%E6%BA%90%E5%BC%80%E6%94%BE%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B1%95%E6%83%85%E5%86%B5/">
+  <meta property="og:site_name" content="Med-Eval">
+  <meta property="og:title" content="全球开源开放大模型发展情况">
+  <meta property="og:description" content="开源开放的大模型 旨在记录全球开源开放大模型发展情况">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="model">
+    <meta property="article:published_time" content="2023-12-19T14:43:38+08:00">
+    <meta property="article:modified_time" content="2023-12-19T14:43:38+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="全球开源开放大模型发展情况">
+  <meta name="twitter:description" content="开源开放的大模型 旨在记录全球开源开放大模型发展情况">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://dujh22.github.io/model/%E5%85%A8%E7%90%83%E5%BC%80%E6%BA%90%E5%BC%80%E6%94%BE%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B1%95%E6%83%85%E5%86%B5/" title="全球开源开放大模型发展情况 - Med-Eval" /><link rel="next" type="text/html" href="https://dujh22.github.io/posts/med-eval/" title="Benchmarks for the Medical Large Language Model" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "全球开源开放大模型发展情况",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dujh22.github.io\/model\/%E5%85%A8%E7%90%83%E5%BC%80%E6%BA%90%E5%BC%80%E6%94%BE%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B1%95%E6%83%85%E5%86%B5\/"
+    },"genre": "model","wordcount":  155 ,
+    "url": "https:\/\/dujh22.github.io\/model\/%E5%85%A8%E7%90%83%E5%BC%80%E6%BA%90%E5%BC%80%E6%94%BE%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B1%95%E6%83%85%E5%86%B5\/","datePublished": "2023-12-19T14:43:38+08:00","dateModified": "2023-12-19T14:43:38+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Author"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><main class="container"><article class="page single special">
+    <div class="header"><h1 class="single-title animate__animated animate__pulse animate__faster">全球开源开放大模型发展情况</h1></div><div class="content" id="content"><h2 class="heading-element" id="开源开放的大模型"><span>开源开放的大模型</span>
+  <a href="#%e5%bc%80%e6%ba%90%e5%bc%80%e6%94%be%e7%9a%84%e5%a4%a7%e6%a8%a1%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>旨在记录全球开源开放大模型发展情况</p>
+<h2 class="heading-element" id="基础大模型"><span>基础大模型</span>
+  <a href="#%e5%9f%ba%e7%a1%80%e5%a4%a7%e6%a8%a1%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">序号</th>
+          <th style="text-align: left">名称</th>
+          <th style="text-align: left">参数规模</th>
+          <th style="text-align: left">数据规模</th>
+          <th style="text-align: left">说明</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">1</td>
+          <td style="text-align: left"><a href="Open-LLMs/llama2.md">LLaMA-2</a></td>
+          <td style="text-align: left">7B,13B,34B,70B</td>
+          <td style="text-align: left">2T</td>
+          <td style="text-align: left">可商用</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2</td>
+          <td style="text-align: left"><a href="Open-LLMs/falcon.md">Falcon</a></td>
+          <td style="text-align: left">7B,40B,180B</td>
+          <td style="text-align: left">3.5T</td>
+          <td style="text-align: left">数据集<a href="https://huggingface.co/datasets/tiiuae/falcon-refinedweb"target="_blank" rel="external nofollow noopener noreferrer"> RefinedWeb</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">3</td>
+          <td style="text-align: left"><a href="Open-LLMs/baichuan2.md">baichuan-2</a></td>
+          <td style="text-align: left">7B,13B</td>
+          <td style="text-align: left">2.6T</td>
+          <td style="text-align: left">开放，商用需授权，<a href="Open-LLMs/baichuan.md">baichuan-1</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">4</td>
+          <td style="text-align: left"><a href="Open-LLMs/internlm.md">InternLM</a></td>
+          <td style="text-align: left">7B,20B</td>
+          <td style="text-align: left">2.3T</td>
+          <td style="text-align: left">开放，商用需授权</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">5</td>
+          <td style="text-align: left"><a href="Open-LLMs/bloom.md">BLOOM</a></td>
+          <td style="text-align: left">3B,7.1B,176B</td>
+          <td style="text-align: left">366B</td>
+          <td style="text-align: left">可商用，最为宽松，<a href="https://mp.weixin.qq.com/s/ia-yrmXbnlooRA3K1hoTwQ"target="_blank" rel="external nofollow noopener noreferrer">详细介绍</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">6</td>
+          <td style="text-align: left">GALACTICA</td>
+          <td style="text-align: left">6.7B,30B,120B</td>
+          <td style="text-align: left">106B</td>
+          <td style="text-align: left">开放的科学文本和数据</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">7</td>
+          <td style="text-align: left"><a href="Open-LLMs/llama.md">LLaMA</a></td>
+          <td style="text-align: left">7B,13B,30B,65B</td>
+          <td style="text-align: left">1.4T</td>
+          <td style="text-align: left">Meta，代码开源，模型“泄露”,不可商用，<a href="https://mp.weixin.qq.com/s/dKInMi6P80GXecUtR3WQsA"target="_blank" rel="external nofollow noopener noreferrer">详细介绍</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">8</td>
+          <td style="text-align: left">MOSS-moon</td>
+          <td style="text-align: left">16B</td>
+          <td style="text-align: left">700B</td>
+          <td style="text-align: left">6.67x1022 FLOPs</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">9</td>
+          <td style="text-align: left">ChatGLM2</td>
+          <td style="text-align: left">6B</td>
+          <td style="text-align: left">1.4T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">10</td>
+          <td style="text-align: left">StableLM</td>
+          <td style="text-align: left">3B,7B</td>
+          <td style="text-align: left">800B</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">11</td>
+          <td style="text-align: left">RedPajama-INCITE</td>
+          <td style="text-align: left">3B,7B</td>
+          <td style="text-align: left">1T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">12</td>
+          <td style="text-align: left">GPT-NeoX</td>
+          <td style="text-align: left">20B</td>
+          <td style="text-align: left">3.15M</td>
+          <td style="text-align: left">800GB的<a href="https://arxiv.org/abs/2101.00027"target="_blank" rel="external nofollow noopener noreferrer">The Pile</a>数据集</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">13</td>
+          <td style="text-align: left">OpenLLaMA</td>
+          <td style="text-align: left">3B,7B,13B</td>
+          <td style="text-align: left">1T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">14</td>
+          <td style="text-align: left">MPT</td>
+          <td style="text-align: left">7B,30B</td>
+          <td style="text-align: left">1T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">15</td>
+          <td style="text-align: left">Pythia</td>
+          <td style="text-align: left">2.8B,6.9B,12B</td>
+          <td style="text-align: left">300B</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">16</td>
+          <td style="text-align: left">XGen</td>
+          <td style="text-align: left">7B</td>
+          <td style="text-align: left">1.5T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">17</td>
+          <td style="text-align: left">OPT</td>
+          <td style="text-align: left">6.7B,13B,30B,66B,175B</td>
+          <td style="text-align: left">180B</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">18</td>
+          <td style="text-align: left"><a href="Open-LLMs/qwen.md">Qwen</a></td>
+          <td style="text-align: left">7B,14B</td>
+          <td style="text-align: left">2.4T,3.0T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">19</td>
+          <td style="text-align: left">XVERSE</td>
+          <td style="text-align: left">13B</td>
+          <td style="text-align: left">1.4T</td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">20</td>
+          <td style="text-align: left"><a href="https://github.com/FlagAI-Open/Aquila2"target="_blank" rel="external nofollow noopener noreferrer">Aquila2</a></td>
+          <td style="text-align: left">7B,34B</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+      </tr>
+      <tr>
+          <td style="text-align: left">21</td>
+          <td style="text-align: left">Prithvi</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">IBM+NASA,地理空间，100M（图片）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">22</td>
+          <td style="text-align: left"><a href="Open-LLMs/skywork.md">Skywork</a></td>
+          <td style="text-align: left">13B</td>
+          <td style="text-align: left">3.2T</td>
+          <td style="text-align: left">昆仑万维·天工</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">23</td>
+          <td style="text-align: left"><a href="https://github.com/deepseek-ai/DeepSeek-Coder"target="_blank" rel="external nofollow noopener noreferrer">Deepseek Coder</a></td>
+          <td style="text-align: left">1.3B,6.7B,33B</td>
+          <td style="text-align: left">2T</td>
+          <td style="text-align: left">Deepseek Coder comprises a series of code language models trained on both 87% code and 13% natural language in English and Chinese, with each model pre-trained on 2T tokens.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">24</td>
+          <td style="text-align: left">Aquila</td>
+          <td style="text-align: left">7B</td>
+          <td style="text-align: left"></td>
+          <td style="text-align: left">悟道·天鹰</td>
+      </tr>
+  </tbody>
+</table>
+<h2 class="heading-element" id="非基础大模型"><span>非基础大模型</span>
+  <a href="#%e9%9d%9e%e5%9f%ba%e7%a1%80%e5%a4%a7%e6%a8%a1%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li>WizardLM，WizardMath，WizardCoder</li>
+<li>Alpaca</li>
+<li>Vicuna</li>
+<li>Guanaco</li>
+<li><a href="Open-LLMs/codellama.md">CodeLLaMA</a>
+<ul>
+<li>7B,13B,34B</li>
+</ul>
+</li>
+</ul>
+<h2 class="heading-element" id="模型架构"><span>模型架构</span>
+  <a href="#%e6%a8%a1%e5%9e%8b%e6%9e%b6%e6%9e%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ul>
+<li><a href="https://github.com/IST-DASLab/gptq"target="_blank" rel="external nofollow noopener noreferrer">GPTQ</a></li>
+<li><a href="https://github.com/facebookresearch/llama"target="_blank" rel="external nofollow noopener noreferrer">LLaMA</a></li>
+</ul>
+</div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.148.2"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.0-alpha-20250721024521-a1cd700b"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"version":"v0.4.0-alpha-20250721024521-a1cd700b"};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

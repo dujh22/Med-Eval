@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>测评工具 - Med-Eval</title><meta name="author" content="">
+<meta name="description" content="Med-Eval 结论准确性：
+">
+  <meta itemprop="name" content="测评工具">
+  <meta itemprop="description" content="Med-Eval 结论准确性：">
+  <meta itemprop="datePublished" content="2024-01-03T12:18:27+08:00">
+  <meta itemprop="dateModified" content="2024-01-03T12:18:27+08:00">
+  <meta itemprop="wordCount" content="781"><meta property="og:url" content="https://dujh22.github.io/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7/">
+  <meta property="og:site_name" content="Med-Eval">
+  <meta property="og:title" content="测评工具">
+  <meta property="og:description" content="Med-Eval 结论准确性：">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="tool">
+    <meta property="article:published_time" content="2024-01-03T12:18:27+08:00">
+    <meta property="article:modified_time" content="2024-01-03T12:18:27+08:00">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="测评工具">
+  <meta name="twitter:description" content="Med-Eval 结论准确性：">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://dujh22.github.io/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7/" title="测评工具 - Med-Eval" /><link rel="prev" type="text/html" href="https://dujh22.github.io/data/%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E7%94%A8%E8%AF%AD%E6%96%99%E5%BA%93%E6%A6%9C%E5%8D%95/" title="医学大模型训练用语料库榜单" /><link rel="next" type="text/html" href="https://dujh22.github.io/model/%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%A6%9C%E5%8D%95v2/" title="医学大模型榜单V2" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "测评工具",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dujh22.github.io\/tool\/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7\/"
+    },"genre": "tool","wordcount":  781 ,
+    "url": "https:\/\/dujh22.github.io\/tool\/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7\/","datePublished": "2024-01-03T12:18:27+08:00","dateModified": "2024-01-03T12:18:27+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "Author"
+      },"description": ""
+  }
+  </script><script src="/js/head/color-scheme.min.js"></script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
+              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><main class="container"><article class="page single special">
+    <div class="header"><h1 class="single-title animate__animated animate__pulse animate__faster">测评工具</h1></div><div class="content" id="content"><h2 class="heading-element" id="med-eval"><span>Med-Eval</span>
+  <a href="#med-eval" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ol>
+<li>
+<p><strong>结论准确性</strong>：</p>
+<ul>
+<li>包括对诊断结果的准确度评估，以及对关键医学术语和概念的正确识别和应用。</li>
+</ul>
+</li>
+<li>
+<p><strong>结论完备性</strong>：</p>
+<ul>
+<li>不仅评估对关键信息的覆盖，还要考虑辅助决策提供的上下文信息和相关解释，确保结论的全面性和深度。</li>
+</ul>
+</li>
+<li>
+<p><strong>过程一致性</strong>：</p>
+<ul>
+<li>评估模型的决策路径是否遵循医学专业标准和逻辑，包括数据处理、分析方法和结论推导过程。</li>
+</ul>
+</li>
+<li>
+<p><strong>可验证性</strong>：</p>
+<ul>
+<li>检验模型输出的一致性和稳定性，包括在不同类型的医疗数据集上的表现和在多次运行中的重复性。</li>
+</ul>
+</li>
+<li>
+<p><strong>优化潜力</strong>：</p>
+<ul>
+<li>分析模型在当前状态下的性能极限，包括对未来改进可能性的评估和对当前缺陷的识别。</li>
+</ul>
+</li>
+<li>
+<p><strong>用户友好性</strong>：</p>
+<ul>
+<li>包括界面的直观性、操作的简便性，以及输出结果的可读性和解释性，确保非技术用户也能轻松使用。</li>
+</ul>
+</li>
+<li>
+<p><strong>响应时间</strong>：</p>
+<ul>
+<li>考虑模型处理请求的速度，特别是在紧急情况下的表现，以及是否能够满足实际临床应用的实时性要求。</li>
+</ul>
+</li>
+<li>
+<p><strong>临床适用性</strong>：</p>
+<ul>
+<li>评估模型在真实临床环境中的实用性，包括适应不同病例类型和处理复杂病情的能力。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据处理能力</strong>：</p>
+<ul>
+<li>评估模型处理大量和多样化医疗数据（如图像、文字、实验数据等）的能力。</li>
+</ul>
+</li>
+<li>
+<p><strong>伦理和安全性</strong>：</p>
+<ul>
+<li>评估模型是否符合医疗伦理标准，包括患者隐私保护和数据安全性。</li>
+</ul>
+</li>
+</ol>
+<p>这些细化的评估指标能够为医学大模型的评估提供更深入的洞察，帮助工程师和医疗专业人员更全面地理解模型的优势、局限和改进方向。</p>
+<p>根据上述讨论的评估指标，我们可以形成一个详细的评分量表，用于对医学大模型辅助决策系统进行量化评估。这个量表可以采用1到5的评分标准，其中1代表非常差，5代表非常好。以下是评分量表的一个示例：</p>
+<ol>
+<li>
+<p><strong>结论准确性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：诊断结果和关键医学术语的准确性极低。</p>
+</li>
+<li>
+<p>3分：诊断结果和关键医学术语的准确性一般。</p>
+</li>
+<li>
+<p>5分：诊断结果和关键医学术语的准确性非常高。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>结论完备性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：输出结果信息不全，缺乏必要的解释和上下文。</p>
+</li>
+<li>
+<p>3分：输出结果基本完备，但部分解释和上下文不够详尽。</p>
+</li>
+<li>
+<p>5分：输出结果非常完备，提供详细的解释和丰富的上下文信息。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>过程一致性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：决策过程与医学专业标准差异很大。</p>
+</li>
+<li>
+<p>3分：决策过程基本符合医学专业标准。</p>
+</li>
+<li>
+<p>5分：决策过程完全符合医学专业标准。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>可验证性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：输出结果不稳定，重复性差。</p>
+</li>
+<li>
+<p>3分：输出结果较为稳定，有一定的重复性。</p>
+</li>
+<li>
+<p>5分：输出结果非常稳定，重复性高。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>优化潜力</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：性能极限低，改进空间小。</p>
+</li>
+<li>
+<p>3分：有一定的改进空间。</p>
+</li>
+<li>
+<p>5分：改进空间大，性能有很大提升潜力。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>用户友好性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：界面不直观，操作复杂，结果难以理解。</p>
+</li>
+<li>
+<p>3分：界面基本直观，操作和结果理解程度一般。</p>
+</li>
+<li>
+<p>5分：界面非常直观，操作简单，结果易于理解。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>响应时间</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：处理速度非常慢，不满足临床需求。</p>
+</li>
+<li>
+<p>3分：处理速度一般，基本满足临床需求。</p>
+</li>
+<li>
+<p>5分：处理速度快，完全满足临床需求。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>临床适用性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：在临床环境中几乎不可用。</p>
+</li>
+<li>
+<p>3分：在临床环境中表现一般。</p>
+</li>
+<li>
+<p>5分：在临床环境中表现出色。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>数据处理能力</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：处理大量和多样化数据的能力非常差。</p>
+</li>
+<li>
+<p>3分：能够处理一定量和类型的数据。</p>
+</li>
+<li>
+<p>5分：处理大量和多样化数据的能力非常强。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>伦理和安全性</strong>（1-5分）：</p>
+<ul>
+<li>
+<p>1分：严重缺乏伦理和安全性考虑。</p>
+</li>
+<li>
+<p>3分：基本符合伦理和安全性要求。</p>
+</li>
+<li>
+<p>5分：严格遵守伦理和安全性标准。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>通过这样的评分量表，可以对不同的医学大模型辅助决策系统进行详细的量化评估。</p>
+<h2 class="heading-element" id="medrad"><span>MedRad</span>
+  <a href="#medrad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>三个数据集，可以宏观上给出 可靠性 低（解决第一个数据集的能力）、中（解决第二个数据集的能力）、高（解决第三个数据集的能力）。</p>
+<h4 class="heading-element" id="低复杂度医学知识问答"><span>低复杂度：医学知识问答</span>
+  <a href="#%e4%bd%8e%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%8c%bb%e5%ad%a6%e7%9f%a5%e8%af%86%e9%97%ae%e7%ad%94" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>可直接根据结果判断。</p>
+<h4 class="heading-element" id="中复杂度门诊医患对话"><span>中复杂度：门诊医患对话</span>
+  <a href="#%e4%b8%ad%e5%a4%8d%e6%9d%82%e5%ba%a6%e9%97%a8%e8%af%8a%e5%8c%bb%e6%82%a3%e5%af%b9%e8%af%9d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>模型生成文本可以从以下维度评价：</p>
+<ol>
+<li>
+<p><strong>医学知识的准确性</strong>：评估模型是否准确引用了医学检查和程序。例如，听诊、X光检查、肺功能测试等是否为诊断肺气肿的标准方法。</p>
+</li>
+<li>
+<p><strong>诊断过程的合理性</strong>：判断模型的建议是否遵循了合理的医学诊断逻辑。诊断建议应该根据患者的具体症状逐步展开，避免跳过重要的诊断步骤或提出不必要的检查。</p>
+</li>
+<li>
+<p><strong>症状与建议的相关性</strong>：考量模型的建议是否紧密针对患者的具体症状。例如，针对呼吸急促和咳痰的症状，是否提出了适当的呼吸系统检查。</p>
+</li>
+<li>
+<p><strong>风险与副作用的考虑</strong>：评估模型在建议诊断和治疗时是否考虑到了可能的风险和副作用，这对于病人来说是重要的信息。</p>
+</li>
+<li>
+<p><strong>沟通和解释的清晰度</strong>：检查模型的输出是否易于理解，是否有效地解释了每项建议检查的目的和必要性，以便患者理解。</p>
+</li>
+</ol>
+<h4 class="heading-element" id="高复杂度临床病历诊断"><span>高复杂度：临床病历诊断</span>
+  <a href="#%e9%ab%98%e5%a4%8d%e6%9d%82%e5%ba%a6%e4%b8%b4%e5%ba%8a%e7%97%85%e5%8e%86%e8%af%8a%e6%96%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>通过以下维度评测：</p>
+<ol>
+<li>
+<p><strong>医学准确性</strong>：模型提供的诊断和医嘱是否与标准答案一致，以及是否符合医学标准和实践。</p>
+</li>
+<li>
+<p><strong>信息详尽程度</strong>：模型是否提供了足够的详细信息，例如药物剂量、用法，以及具体的后续治疗和生活方式建议。</p>
+</li>
+<li>
+<p><strong>适应病人情况</strong>：模型的回答是否考虑了病人的具体情况和需求。</p>
+</li>
+<li>
+<p><strong>治疗的连续性</strong>：模型是否提出了合理的后续治疗计划，例如复诊安排。</p>
+</li>
+<li>
+<p><strong>语言和表达清晰度</strong>：模型提供的信息是否清晰易懂，有助于病人或家属的理解。</p>
+</li>
+</ol>
+<p>评分时让模型从每个维度打分并求平均分，可以拉开问题间的评分差距。</p>
+<p>例如利用gpt4进行propmt测评：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">请参考标准答案，请从以下角度简短评价评价模型的回答效果准确性:</span> <span style="color:#960050;background-color:#1e0010">模型的答案是否提供了正确、科学的信息。</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">相关性:</span> <span style="color:#960050;background-color:#1e0010">答案是否针对患者的具体问题，与患者的描述和问题紧密相关</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">完整性:答案是否全面，覆盖了患者可能需要的所有重要信息。</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">清晰性:信息是否表达清晰，易于患者理解。</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">逻辑性:</span> <span style="color:#960050;background-color:#1e0010">答案的结构是否合理，信息是否按逻辑顺序排列。</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">交互的自然性:</span> <span style="color:#960050;background-color:#1e0010">回答是否流畅，是否类似于真实的医患对话</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">合规性:答案是否符合医学伦理和法律规定，避免提供误导信息或不恰当的建议。并结合对于模型评价为模型的回答打一个</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">到</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">的分数，评分标准为:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#960050;background-color:#1e0010">回答存在准确性或者合规性上的明显错误:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#960050;background-color:#1e0010">回答准确合规、但在相关性或者逻辑性上有明显问题</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">:回答准确合规，相关且无明显逻辑错误，但并不完整，或者没有清晰表达</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#960050;background-color:#1e0010">回答信息基本完备，但交互存在不够自然的问题，</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">:</span> <span style="color:#960050;background-color:#1e0010">回答在评价的条件中均属完美:</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">如果分数不是</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">分，请生成一个可以被评为</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">分</span></span></span></code></pre></div><h2 class="heading-element" id="medqa-usmle"><span>MedQA-USMLE</span>
+  <a href="#medqa-usmle" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><table>
+  <thead>
+      <tr>
+          <th>数据集定义</th>
+          <th>MedQA-USMLE是一个基于美国医疗执照考试(USMLE)的多项选择问题回答数据集。<!-- raw HTML omitted -->数据来自专业医疗委员会的考试，涵盖了各种医疗领域的问题。</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>数据提供者</td>
+          <td>- Computer Science and Artificial Intelligence<!-- raw HTML omitted -->- MITTongji Medical College,HUST(华中科技大学同济医学院 )</td>
+      </tr>
+      <tr>
+          <td>数据规模/构成</td>
+          <td>数据集QA包含三种语言：<!-- raw HTML omitted -->- 英语：12723个    <!-- raw HTML omitted -->- 简体中文：34251个<!-- raw HTML omitted -->- 繁体中文：14123个</td>
+      </tr>
+      <tr>
+          <td>数据维度</td>
+          <td>Question:问题描述<!-- raw HTML omitted -->Options:选项与正确答案<!-- raw HTML omitted -->Evidence:依据与解释</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;question&#34;</span>: <span style="color:#e6db74">&#34;A 57-year-old man presents to his primary care physician with a 2-month history of right upper and lower extremity weakness. He noticed the weakness when he started falling far more frequently while running errands. Since then, he has had increasing difficulty with walking and lifting objects. His past medical history is significant only for well-controlled hypertension, but he says that some members of his family have had musculoskeletal problems. His right upper extremity shows forearm atrophy and depressed reflexes while his right lower extremity is hypertonic with a positive Babinski sign. Which of the following is most likely associated with the cause of this patient&#39;s symptoms?&#34;</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;answer&#34;</span>: <span style="color:#e6db74">&#34;Mutation in SOD1&#34;</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;options&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;A&#34;</span>: <span style="color:#e6db74">&#34;HLA-B8 haplotype&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;B&#34;</span>: <span style="color:#e6db74">&#34;HLA-DR2 haplotype&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;C&#34;</span>: <span style="color:#e6db74">&#34;Mutation in SOD1&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;D&#34;</span>: <span style="color:#e6db74">&#34;Mutation in SMN1&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;E&#34;</span>: <span style="color:#e6db74">&#34;Viral infection&#34;</span>
+</span></span><span style="display:flex;"><span>    }, 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;meta_info&#34;</span>: <span style="color:#e6db74">&#34;step1&#34;</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;answer_idx&#34;</span>: <span style="color:#e6db74">&#34;C&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;QU&#34;</span>: <span style="color:#e6db74">&#34;一名57岁的男子向其初级保健医生介绍其右上下肢无力2个月的病史。当他在跑腿时开始更频繁地摔倒时，他注意到了自己的弱点。从那以后，他走路和举起东西的难度越来越大。他过去的病史只有在高血压控制良好的情况下才有意义，但他说，他的一些家庭成员有肌肉骨骼问题。他的右上肢表现为前臂萎缩和反射抑制，而右下肢高渗，巴宾斯基征呈阳性。以下哪一项最有可能与该患者症状的原因有关？&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;OP&#34;</span>:
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;A&#34;</span>: <span style="color:#e6db74">&#34;HLA-B8单倍型&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;B&#34;</span>: <span style="color:#e6db74">&#34;HLA-DR2单倍型&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;C&#34;</span>: <span style="color:#e6db74">&#34;SOD1突变&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;D&#34;</span>: <span style="color:#e6db74">&#34;SMN1突变&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;E&#34;</span>: <span style="color:#e6db74">&#34;病毒感染&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;AN&#34;</span>: <span style="color:#e6db74">&#34;C&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><ul>
+<li>
+<p>MedQA-USMLE是第一个自由形式的多项选择开放领域问题回答数据集，专门用于解决医疗问题。</p>
+</li>
+<li>
+<p>该数据集的多语言特性(包括中文和英文),有助于中国医疗大模型研发与全球水平的对标评估。</p>
+</li>
+<li>
+<p>数据来源： <a href="https://github.com/jind11/MedQA"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/jind11/MedQA</a></p>
+</li>
+</ul>
+<h2 class="heading-element" id="pubmedqa"><span>PubMedQA</span>
+  <a href="#pubmedqa" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><table>
+  <thead>
+      <tr>
+          <th>数据集定义</th>
+          <th>PubMedQA是一个生物医学问题回答(QA)数据集，该数据集从PubMed摘要中收集。<!-- raw HTML omitted -->任务定义是使用相应的摘要回答研究问题，这些问题的答案可以是yes/no/maybe。<!-- raw HTML omitted -->例如：术前使用他汀类药物能否减少冠状动脉旁路移植术后的心房颤动?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>数据提供者</td>
+          <td>- University of Pittsburgr<!-- raw HTML omitted -->- Carnegie Mellon University<!-- raw HTML omitted -->- Google Al</td>
+      </tr>
+      <tr>
+          <td>数据规模/构成</td>
+          <td>QA数据包含：<!-- raw HTML omitted -->- 1k专家注释数据<!-- raw HTML omitted -->- 61.2k未标记数据<!-- raw HTML omitted -->- 211.3k人工生成数据</td>
+      </tr>
+      <tr>
+          <td>数据维度</td>
+          <td>Question:问题描述<!-- raw HTML omitted -->Context:上下文，即问题相关的摘要，但不包括结论<!-- raw HTML omitted -->Long Answer:长答案，即摘要的结论<!-- raw HTML omitted -->Answer:对结论的总结，是yes/no/maybe的形式</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;QUESTION&#34;</span>: <span style="color:#e6db74">&#34;Does psammaplin A induce Sirtuin 1-dependent autophagic cell death in doxorubicin-resistant MCF-7/adr human breast cancer cells and xenografts?&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;CONTEXTS&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Psammaplin A (PsA) is a natural product isolated from marine sponges, which has been demonstrated to have anticancer activity against several human cancer cell lines via the induction of cell cycle arrest and apoptosis. New drugs that are less toxic and more effective against multidrug-resistant cancers are urgently needed.&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;We tested cell proliferation, cell cycle progression and autophagic cell death pathway in doxorubicin-resistant MCF-7 (MCF-7/adr) human breast cancer cells. The potency of PsA was further determined using an in vivo xenograft model.&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;LABELS&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;BACKGROUND&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;METHODS&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;LONG_ANSWER&#34;</span>: <span style="color:#e6db74">&#34;PsA significantly inhibited MCF-7/adr cells proliferation in a concentration-dependent manner, with accumulation of cells in G2/M phase of the cell cycle. PsA significantly decreased SIRT1 enzyme activity and reduced expression of SIRT1 protein in the cultured cells with greater potency than sirtinol or salermide. Acetylation of p53, a putative target of SIRT1, increased significantly following PsA treatment. In addition, PsA markedly increased the expression levels of autophagy-related proteins. In support of this, it was found that PsA significantly increased the expression of damage-regulated autophagy modulator (DRAM), a p53-induced protein.&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;MESHES&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Acetylation&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Animals&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Antibiotics, Antineoplastic&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Autophagy&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Breast Neoplasms&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Cell Division&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Cell Line, Tumor&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Disulfides&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Doxorubicin&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Drug Resistance, Neoplasm&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Female&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;G2 Phase&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Gene Expression Regulation, Neoplastic&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Heterografts&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Humans&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Membrane Proteins&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Mice&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Mice, Nude&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Neoplasm Transplantation&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Sirtuin 1&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Tumor Suppressor Protein p53&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Tyrosine&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Xenograft Model Antitumor Assays&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;final_decision&#34;</span>: <span style="color:#e6db74">&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;QU&#34;</span>: <span style="color:#e6db74">&#34;在阿霉素耐药MCF-7/adr人乳腺癌症细胞和异种移植物中，psammablin A是否诱导Sirtuin 1依赖性自噬细胞死亡？&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;CONTEXTS&#34;</span>:
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Psammablin A（PsA）是一种从海绵中分离的天然产物，已被证明通过诱导细胞周期阻滞和凋亡对几种人癌症细胞系具有抗癌活性。迫切需要毒性更小、对耐多药癌症更有效的新药。&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;我们在多柔比星耐药的MCF-7（MCF-7/adr）人乳腺癌症细胞中检测了细胞增殖、细胞周期进展和自噬细胞死亡途径。使用体内异种移植物模型进一步测定PsA的效力。&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;AN&#34;</span>: <span style="color:#e6db74">&#34;对&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;LONG_AN&#34;</span>: <span style="color:#e6db74">&#34;PsA以浓度依赖性方式显著抑制MCF-7/adr细胞增殖，细胞在细胞周期的G2/M期积累。在培养的细胞中，PsA显著降低SIRT1酶活性并降低SIRT1蛋白的表达，其效力大于sirtinol或salermide。p53（SIRT1的假定靶点）的乙酰化在PsA治疗后显著增加。此外，PsA显著提高了自噬相关蛋白的表达水平。为了支持这一点，发现PsA显著增加了损伤调节的自噬调节剂（DRAM）的表达，DRAM是一种p53诱导的蛋白质。&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;MESHES&#34;</span>:
+</span></span><span style="display:flex;"><span>    [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;乙酰化作用&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;动物&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;抗生素类, 抗肿瘤&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;自噬&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;乳腺肿瘤&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;细胞分裂&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;细胞系, 肿瘤&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;二硫化物类&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;多柔比星&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;抗药性, 肿瘤&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;女(雌)性&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;G2期&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;基因表达调控, 肿瘤&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;异种移植物&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;人类&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;膜蛋白质类&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;小鼠&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;小鼠, 裸&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;肿瘤移植&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;抗衰老酶1&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;肿瘤抑制蛋白质p53&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;酪氨酸&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;异种移植模型抗肿瘤试验&#34;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><ul>
+<li>PubMedQA  是第一个需要对生物医学研究文本进行推理，特别是对其定量内容进行推理，以回答问题的QA数据集，因此在医学研究领域具有很高的价值。</li>
+<li>数据来源： <a href="https://huggingface.co/datasets/pubmed_qa"target="_blank" rel="external nofollow noopener noreferrer">https://huggingface.co/datasets/pubmed_qa</a></li>
+</ul>
+<h2 class="heading-element" id="medmcqa"><span>MedMCQA</span>
+  <a href="#medmcqa" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><table>
+  <thead>
+      <tr>
+          <th>数据集定义</th>
+          <th>MedMCQA是一个大规模的、多主题的、多选择题的医学领域问题回答数据集，旨在解决真实世界的医学入学考试问题。</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>数据提供者</td>
+          <td>由Saama Al Research提供。</td>
+      </tr>
+      <tr>
+          <td>数据规模/构成</td>
+          <td>包含了194,267个问题：覆盖了2,400个医疗主题和21个医学科目。</td>
+      </tr>
+      <tr>
+          <td>数据维度</td>
+          <td>Question:问题<!-- raw HTML omitted -->Options:选项<!-- raw HTML omitted -->Correct Answer:正确答案(选项)<!-- raw HTML omitted -->Explanation:详细解释<!-- raw HTML omitted -->Subject:学科<!-- raw HTML omitted -->Topic:主题</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;question&#34;</span>:<span style="color:#e6db74">&#34;Chronic urethral obstruction due to benign prismatic hyperplasia can lead to the following change in kidney parenchyma&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;exp&#34;</span>:<span style="color:#e6db74">&#34;Chronic urethral obstruction because of urinary calculi, prostatic hyperophy, tumors, normal pregnancy, tumors, uterine prolapse or functional disorders cause hydronephrosis which by definition is used to describe dilatation of renal pelvis and calculus associated with progressive atrophy of the kidney due to obstruction to the outflow of urine Refer Robbins 7yh\/9,1012,9\/e. P950&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;cop&#34;</span>:<span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;opa&#34;</span>:<span style="color:#e6db74">&#34;Hyperplasia&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;opb&#34;</span>:<span style="color:#e6db74">&#34;Hyperophy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;opc&#34;</span>:<span style="color:#e6db74">&#34;Atrophy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;opd&#34;</span>:<span style="color:#e6db74">&#34;Dyplasia&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;subject_name&#34;</span>:<span style="color:#e6db74">&#34;Anatomy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;topic_name&#34;</span>:<span style="color:#e6db74">&#34;Urinary tract&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>:<span style="color:#e6db74">&#34;e9ad821a-c438-4965-9f77-760819dfa155&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;choice_type&#34;</span>:<span style="color:#e6db74">&#34;single&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;QU&#34;</span>: <span style="color:#e6db74">&#34;良性棱柱状增生引起的慢性尿道梗阻可导致肾实质发生以下变化&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;OP&#34;</span>:
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;A&#34;</span>: <span style="color:#e6db74">&#34;增生&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;B&#34;</span>: <span style="color:#e6db74">&#34;Hyperphy&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;C&#34;</span>: <span style="color:#e6db74">&#34;萎缩&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;D&#34;</span>: <span style="color:#e6db74">&#34;发育不全&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;EXP&#34;</span>: <span style="color:#e6db74">&#34;由尿路结石、前列腺增生、肿瘤、正常妊娠、肿瘤、子宫脱垂或功能紊乱引起的慢性尿道梗阻会导致肾积水，根据定义，肾积水用于描述因尿液流出受阻而导致的肾盂扩张和与肾脏进行性萎缩相关的结石。参见Robbins 7yh/91012,9/e。P950&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;AN&#34;</span>: <span style="color:#e6db74">&#34;C&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><ul>
+<li>数据集可以用来测试模型在医学领域问题回答的能力，特别是在处理真实世界的医学入学考试问题上。</li>
+<li>MedMCQA的每个问题都带有Subject  (学科)、Topic  (主题)标签，有助于更精细化的模型训练、细分领域评估。</li>
+<li>数据来源： <a href="https://huggingface.co/datasets/medmcqa"target="_blank" rel="external nofollow noopener noreferrer">https://huggingface.co/datasets/medmcqa</a></li>
+<li><a href="https://github.com/medmcqa/medmcqa"target="_blank" rel="external nofollow noopener noreferrer">GitHub - medmcqa/medmcqa: A large-scale (194k), Multiple-Choice Question Answering (MCQA) dataset designed to address realworld medical entrance exam questions.</a></li>
+</ul>
+<h2 class="heading-element" id="med-eval-chinesedoctor中国职业医师考试题"><span>Med-Eval-ChineseDoctor：中国职业医师考试题</span>
+  <a href="#med-eval-chinesedoctor%e4%b8%ad%e5%9b%bd%e8%81%8c%e4%b8%9a%e5%8c%bb%e5%b8%88%e8%80%83%e8%af%95%e9%a2%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><table>
+  <thead>
+      <tr>
+          <th>数据集定义</th>
+          <th>Med-Eval-ChineseDoctor是一个中国职业医师选择题数据集，旨在解决真实世界的中国职业医师医学入学考试问题。</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>数据提供者</td>
+          <td>由清华大学OpenDE团队和中国医学科学院医学信息研究所提供。</td>
+      </tr>
+      <tr>
+          <td>数据规模/构成</td>
+          <td>包含了2957个问题</td>
+      </tr>
+      <tr>
+          <td>数据维度</td>
+          <td>Question:问题<!-- raw HTML omitted -->Options:选项<!-- raw HTML omitted -->Correct Answer:正确答案(选项)</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;question&#34;</span>: <span style="color:#e6db74">&#34;颌骨骨髓炎通常在发病几周后才能逐渐在×线片上呈现骨质变化&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;options&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;A&#34;</span>: <span style="color:#e6db74">&#34;1周&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;B&#34;</span>: <span style="color:#e6db74">&#34;2周&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;C&#34;</span>: <span style="color:#e6db74">&#34;3周&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;D&#34;</span>: <span style="color:#e6db74">&#34;4周&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;E&#34;</span>: <span style="color:#e6db74">&#34;3-4周&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;answer&#34;</span>: <span style="color:#e6db74">&#34;D&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><ul>
+<li>数据集可以用来测试模型在医学领域问题回答的能力，特别是在处理真实世界的医学入学考试问题上。</li>
+<li>测试原则
+<ul>
+<li>严格正确：模型输出正确选项</li>
+<li>绝对宽松正确：模型输出存在正确选项，比如输出【答案】A   正确就是A</li>
+<li>相对宽松正确：模型中存在正确选项的具体内容</li>
+</ul>
+</li>
+</ul>
+</div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.148.2"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.0-alpha-20250721024521-a1cd700b"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"version":"v0.4.0-alpha-20250721024521-a1cd700b"};</script><script src="/js/theme.min.js" defer></script></body>
+</html>
