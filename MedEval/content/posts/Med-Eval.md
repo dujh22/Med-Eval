@@ -33,7 +33,6 @@ repost:
 
 # See details front matter: https://fixit.lruihao.cn/documentation/content-management/introduction/#front-matter
 ---
-
 {{< figure src="/fixit.svg" title="" >}}
 
 **Med-Eval** 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。
@@ -76,18 +75,8 @@ Med-Eval具有如下特点：
 
 此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。
 
-```
-@misc{
-      title={Med-Eval: Benchmarks for the Medical Large Language Model },
-      author={Jinhua Du and Jingyi Ren and Xinyi Li and Tianying Tang and Yanuo Zhou and Feng Qiu and Hao Yin},
-      year={2023},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
-}
-```
-
 ## 🌏 联系我们
 
-该项目由**清华大学OpenDE团队**发布。 对Med-Eval有任何疑问或者需潜在的合作，请联系dujh22@mails.tsinghua.edu.cn。
+对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。
 
 <!--more-->
