@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>Med-Eval</title>
-    <link>https://dujh22.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Med-Eval</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Jan 2024 18:14:28 &#43;0800</lastBuildDate>
-      <atom:link href="https://dujh22.github.io/index.xml" rel="self" type="application/rss+xml" />
+      <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>Benchmarks for the Medical Large Language Model</title>
-  <link>https://dujh22.github.io/posts/med-eval/</link>
+  <link>http://localhost:1313/posts/med-eval/</link>
   <pubDate>Wed, 20 Dec 2023 11:03:47 &#43;0800</pubDate>
   <author>Author</author>
-  <guid>https://dujh22.github.io/posts/med-eval/</guid>
+  <guid>http://localhost:1313/posts/med-eval/</guid>
   <description><![CDATA[<figure><img src="/fixit.svg">
 </figure>
 
