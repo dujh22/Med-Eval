@@ -6,16 +6,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
     <title>MedRad具体场景和代码 - Med-Eval</title><meta name="author" content="">
-<meta name="description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。
-">
+<meta name="author-link" content="">
+<meta name="description" content="低复杂度：医学知识问答
+1. 场景示例
+{
+        &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;,
+        &#34;OP&#34;:
+        {
+            &#34;A&#34;: &#34;可调节胃束带&#34;,
+            &#34;B&#34;: &#34;胆胰分流&#34;,
+            &#34;C&#34;: &#34;十二指肠开关&#34;,
+            &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34;
+        },
+        &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;,
+        &#34;AN&#34;: &#34;D&#34;
+},2. 场景说明
+这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。
+
+
+信息检索（RAG）: 首先使用信息检索技术从大量数据中找到与问题相关的信息。这一步骤的目的是快速定位与问题相关的医学知识和数据。
+
+
+思维链（CoT）: 接下来，通过构建思维链来分析问题。这包括理解问题的具体要求，解析各个选项，并将其与检索到的信息相对比。这一步骤有助于深入理解问题的背景和每个选项的含义。
+
+
+智能代理（Agent）: 最后，结合Agent的能力，对上述两步骤的结果进行综合分析，并得出最终答案。Agent在这里起到的是决策和验证的作用，确保答案的准确性和逻辑性。
+
+
+对于这个特定的例子，Agent首先需要识别问题是关于病态肥胖的治疗手术，然后通过RAG检索相关的医学信息，比如各种手术的类型和特点。通过CoT分析每个选项，理解它们各自的手术原理，并确定哪个选项不属于治疗病态肥胖的手术。最后，Agent将结合这些信息来验证并确定正确的答案。
+3. MedRad实现
+医学知识问答系统的工作步骤：
+
+
+问题识别：
+
+Agent接收到用户的查询（医学问题）后，首先进行问题识别。这个过程可能包括关键词提取、问题类型分类（例如症状查询、药物信息或疾病相关知识）以及紧急度评估。
+
+
+
+信息检索：
+
+Agent使用先进的信息检索技术在大量医学数据中找到与问题最相关的信息。这些数据可能来自医学数据库、研究论文、临床指南或其他医学知识库。
+
+
+
+选项解析与对比：
+
+对于问题的每个可能选项（A、B、C、D），Agent分别进行解析。这个解析可能包括对医学术语的理解、病理机制、治疗方案或药物作用的解释等。
+Agent将每个选项与检索到的相关信息进行对比，评估其准确性、相关性和可靠性。
+
+
+
+综合分析：
+
+Agent对上述每个步骤的结果进行综合分析。这可能涉及比较不同选项的支持证据，考虑其医学逻辑和临床实践的一致性。
+分析可能还包括检查信息源的可信度、最新度以及与现有医学共识的一致性。
+
+
+
+得出结论：
+
+经过综合分析后，Agent得出最终答案。这个答案是基于Agent对各个选项评估的结果，选择最佳的、最符合医学证据的选项。
+最终答案会反馈给用户，并提供相应的解释，解释可能包括答案的依据、相关的医学信息以及如果可行的话，进一步的建议或指示。
+
+
+
+这个流程涵盖了从接收用户查询到提供经过深思熟虑的、信息支持的答案的整个过程。在实际应用中，Agent还会包括额外的功能，如与用户的交互能力、处理模糊或不完整查询的能力，以及持续学习和适应新信息的能力。
+以下是该功能实现的伪代码：
+function handle_medical_query(query)
+    agent = initialize_agent()
+    
+    # 使用信息检索技术检索相关信息
+    related_information = retrieve_information(query)
+    
+    # 解析每个选项，并与检索到的信息进行比较
+    option_A_result = agent.analyze_option(&#34;A&#34;, related_information)
+    option_B_result = agent.analyze_option(&#34;B&#34;, related_information)
+    option_C_result = agent.analyze_option(&#34;C&#34;, related_information)
+    option_D_result = agent.analyze_option(&#34;D&#34;, related_information)
+    
+    # 综合分析每个选项的结果
+    final_answer = agent.conclude_answer(option_A_result, option_B_result, option_C_result, option_D_result)
+    
+    return final_answer
+
+function retrieve_information(query)
+    # 实现具体的信息检索逻辑
+    related_information = search_database(query)
+    return related_information
+
+function analyze_option(option, information)
+    # 解析选项，并与信息进行比较
+    analysis_result = compare_option_with_information(option, information)
+    return analysis_result
+
+function conclude_answer(*options_results)
+    # 对比各个选项的分析结果，得出最终答案
+    best_option = select_best_option_based_on_results(options_results)
+    return best_option中复杂度：门诊医患对话
+1. 场景示例
+{
+    &#34;input&#34;: &#34;医生，昨天我的右侧突然感到虚弱和麻木。它持续了几分钟，然后就消失了。我也有一段时间难以说话。你能帮我弄清楚发生了什么事吗？&#34;,
+    &#34;instruction&#34;: &#34;如果你是一名医生，请根据患者的描述回答医学问题。&#34;,
+    &#34;output&#34;: &#34;你可能经历了短暂的脑缺血发作。我想做一些医学检查来确认诊断结果。我们需要从放射学成像程序、血液学测试（血液测试）、全血细胞计数（CBC）、X射线计算机断层扫描（扫描CT）、心电图、肾功能测试（肾功能测试）和葡萄糖测量（葡萄糖水平）开始，以更好地了解发生了什么。我们能为您安排这些测试吗？&#34;
+}2. 场景说明
+门诊医患对话场景通常涉及根据患者的描述来诊断和建议后续的医疗步骤。处理这类场景的一般范式可以从 RAG 结合 CoT 和 Agent 的角度来构建：" /><meta name="keywords" content='Hugo, FixIt' />
   <meta itemprop="name" content="MedRad具体场景和代码">
-  <meta itemprop="description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。">
+  <meta itemprop="description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。
+信息检索（RAG）: 首先使用信息检索技术从大量数据中找到与问题相关的信息。这一步骤的目的是快速定位与问题相关的医学知识和数据。
+思维链（CoT）: 接下来，通过构建思维链来分析问题。这包括理解问题的具体要求，解析各个选项，并将其与检索到的信息相对比。这一步骤有助于深入理解问题的背景和每个选项的含义。
+智能代理（Agent）: 最后，结合Agent的能力，对上述两步骤的结果进行综合分析，并得出最终答案。Agent在这里起到的是决策和验证的作用，确保答案的准确性和逻辑性。
+对于这个特定的例子，Agent首先需要识别问题是关于病态肥胖的治疗手术，然后通过RAG检索相关的医学信息，比如各种手术的类型和特点。通过CoT分析每个选项，理解它们各自的手术原理，并确定哪个选项不属于治疗病态肥胖的手术。最后，Agent将结合这些信息来验证并确定正确的答案。
+3. MedRad实现 医学知识问答系统的工作步骤：
+问题识别：
+Agent接收到用户的查询（医学问题）后，首先进行问题识别。这个过程可能包括关键词提取、问题类型分类（例如症状查询、药物信息或疾病相关知识）以及紧急度评估。 信息检索：
+Agent使用先进的信息检索技术在大量医学数据中找到与问题最相关的信息。这些数据可能来自医学数据库、研究论文、临床指南或其他医学知识库。 选项解析与对比：
+对于问题的每个可能选项（A、B、C、D），Agent分别进行解析。这个解析可能包括对医学术语的理解、病理机制、治疗方案或药物作用的解释等。 Agent将每个选项与检索到的相关信息进行对比，评估其准确性、相关性和可靠性。 综合分析：
+Agent对上述每个步骤的结果进行综合分析。这可能涉及比较不同选项的支持证据，考虑其医学逻辑和临床实践的一致性。 分析可能还包括检查信息源的可信度、最新度以及与现有医学共识的一致性。 得出结论：
+经过综合分析后，Agent得出最终答案。这个答案是基于Agent对各个选项评估的结果，选择最佳的、最符合医学证据的选项。 最终答案会反馈给用户，并提供相应的解释，解释可能包括答案的依据、相关的医学信息以及如果可行的话，进一步的建议或指示。 这个流程涵盖了从接收用户查询到提供经过深思熟虑的、信息支持的答案的整个过程。在实际应用中，Agent还会包括额外的功能，如与用户的交互能力、处理模糊或不完整查询的能力，以及持续学习和适应新信息的能力。
+以下是该功能实现的伪代码：
+function handle_medical_query(query) agent = initialize_agent() # 使用信息检索技术检索相关信息 related_information = retrieve_information(query) # 解析每个选项，并与检索到的信息进行比较 option_A_result = agent.analyze_option(&#34;A&#34;, related_information) option_B_result = agent.analyze_option(&#34;B&#34;, related_information) option_C_result = agent.analyze_option(&#34;C&#34;, related_information) option_D_result = agent.analyze_option(&#34;D&#34;, related_information) # 综合分析每个选项的结果 final_answer = agent.conclude_answer(option_A_result, option_B_result, option_C_result, option_D_result) return final_answer function retrieve_information(query) # 实现具体的信息检索逻辑 related_information = search_database(query) return related_information function analyze_option(option, information) # 解析选项，并与信息进行比较 analysis_result = compare_option_with_information(option, information) return analysis_result function conclude_answer(*options_results) # 对比各个选项的分析结果，得出最终答案 best_option = select_best_option_based_on_results(options_results) return best_option中复杂度：门诊医患对话 1. 场景示例 { &#34;input&#34;: &#34;医生，昨天我的右侧突然感到虚弱和麻木。它持续了几分钟，然后就消失了。我也有一段时间难以说话。你能帮我弄清楚发生了什么事吗？&#34;, &#34;instruction&#34;: &#34;如果你是一名医生，请根据患者的描述回答医学问题。&#34;, &#34;output&#34;: &#34;你可能经历了短暂的脑缺血发作。我想做一些医学检查来确认诊断结果。我们需要从放射学成像程序、血液学测试（血液测试）、全血细胞计数（CBC）、X射线计算机断层扫描（扫描CT）、心电图、肾功能测试（肾功能测试）和葡萄糖测量（葡萄糖水平）开始，以更好地了解发生了什么。我们能为您安排这些测试吗？&#34; }2. 场景说明 门诊医患对话场景通常涉及根据患者的描述来诊断和建议后续的医疗步骤。处理这类场景的一般范式可以从 RAG 结合 CoT 和 Agent 的角度来构建：">
   <meta itemprop="datePublished" content="2024-01-03T12:22:42+08:00">
   <meta itemprop="dateModified" content="2024-01-03T12:22:42+08:00">
   <meta itemprop="wordCount" content="548"><meta property="og:url" content="https://dujh22.github.io/model/medrad%E5%85%B7%E4%BD%93%E5%9C%BA%E6%99%AF%E5%92%8C%E4%BB%A3%E7%A0%81/">
   <meta property="og:site_name" content="Med-Eval">
   <meta property="og:title" content="MedRad具体场景和代码">
-  <meta property="og:description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。">
+  <meta property="og:description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。
+信息检索（RAG）: 首先使用信息检索技术从大量数据中找到与问题相关的信息。这一步骤的目的是快速定位与问题相关的医学知识和数据。
+思维链（CoT）: 接下来，通过构建思维链来分析问题。这包括理解问题的具体要求，解析各个选项，并将其与检索到的信息相对比。这一步骤有助于深入理解问题的背景和每个选项的含义。
+智能代理（Agent）: 最后，结合Agent的能力，对上述两步骤的结果进行综合分析，并得出最终答案。Agent在这里起到的是决策和验证的作用，确保答案的准确性和逻辑性。
+对于这个特定的例子，Agent首先需要识别问题是关于病态肥胖的治疗手术，然后通过RAG检索相关的医学信息，比如各种手术的类型和特点。通过CoT分析每个选项，理解它们各自的手术原理，并确定哪个选项不属于治疗病态肥胖的手术。最后，Agent将结合这些信息来验证并确定正确的答案。
+3. MedRad实现 医学知识问答系统的工作步骤：
+问题识别：
+Agent接收到用户的查询（医学问题）后，首先进行问题识别。这个过程可能包括关键词提取、问题类型分类（例如症状查询、药物信息或疾病相关知识）以及紧急度评估。 信息检索：
+Agent使用先进的信息检索技术在大量医学数据中找到与问题最相关的信息。这些数据可能来自医学数据库、研究论文、临床指南或其他医学知识库。 选项解析与对比：
+对于问题的每个可能选项（A、B、C、D），Agent分别进行解析。这个解析可能包括对医学术语的理解、病理机制、治疗方案或药物作用的解释等。 Agent将每个选项与检索到的相关信息进行对比，评估其准确性、相关性和可靠性。 综合分析：
+Agent对上述每个步骤的结果进行综合分析。这可能涉及比较不同选项的支持证据，考虑其医学逻辑和临床实践的一致性。 分析可能还包括检查信息源的可信度、最新度以及与现有医学共识的一致性。 得出结论：
+经过综合分析后，Agent得出最终答案。这个答案是基于Agent对各个选项评估的结果，选择最佳的、最符合医学证据的选项。 最终答案会反馈给用户，并提供相应的解释，解释可能包括答案的依据、相关的医学信息以及如果可行的话，进一步的建议或指示。 这个流程涵盖了从接收用户查询到提供经过深思熟虑的、信息支持的答案的整个过程。在实际应用中，Agent还会包括额外的功能，如与用户的交互能力、处理模糊或不完整查询的能力，以及持续学习和适应新信息的能力。
+以下是该功能实现的伪代码：
+function handle_medical_query(query) agent = initialize_agent() # 使用信息检索技术检索相关信息 related_information = retrieve_information(query) # 解析每个选项，并与检索到的信息进行比较 option_A_result = agent.analyze_option(&#34;A&#34;, related_information) option_B_result = agent.analyze_option(&#34;B&#34;, related_information) option_C_result = agent.analyze_option(&#34;C&#34;, related_information) option_D_result = agent.analyze_option(&#34;D&#34;, related_information) # 综合分析每个选项的结果 final_answer = agent.conclude_answer(option_A_result, option_B_result, option_C_result, option_D_result) return final_answer function retrieve_information(query) # 实现具体的信息检索逻辑 related_information = search_database(query) return related_information function analyze_option(option, information) # 解析选项，并与信息进行比较 analysis_result = compare_option_with_information(option, information) return analysis_result function conclude_answer(*options_results) # 对比各个选项的分析结果，得出最终答案 best_option = select_best_option_based_on_results(options_results) return best_option中复杂度：门诊医患对话 1. 场景示例 { &#34;input&#34;: &#34;医生，昨天我的右侧突然感到虚弱和麻木。它持续了几分钟，然后就消失了。我也有一段时间难以说话。你能帮我弄清楚发生了什么事吗？&#34;, &#34;instruction&#34;: &#34;如果你是一名医生，请根据患者的描述回答医学问题。&#34;, &#34;output&#34;: &#34;你可能经历了短暂的脑缺血发作。我想做一些医学检查来确认诊断结果。我们需要从放射学成像程序、血液学测试（血液测试）、全血细胞计数（CBC）、X射线计算机断层扫描（扫描CT）、心电图、肾功能测试（肾功能测试）和葡萄糖测量（葡萄糖水平）开始，以更好地了解发生了什么。我们能为您安排这些测试吗？&#34; }2. 场景说明 门诊医患对话场景通常涉及根据患者的描述来诊断和建议后续的医疗步骤。处理这类场景的一般范式可以从 RAG 结合 CoT 和 Agent 的角度来构建：">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="model">
@@ -24,11 +153,24 @@
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="MedRad具体场景和代码">
-  <meta name="twitter:description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。">
-<meta name="application-name" content="FixIt">
-<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <meta name="twitter:description" content="低复杂度：医学知识问答 1. 场景示例 { &#34;QU&#34;: &#34;以下都是治疗病态肥胖的手术选择，除了-&#34;, &#34;OP&#34;: { &#34;A&#34;: &#34;可调节胃束带&#34;, &#34;B&#34;: &#34;胆胰分流&#34;, &#34;C&#34;: &#34;十二指肠开关&#34;, &#34;D&#34;: &#34;Roux en y十二指肠旁路&#34; }, &#34;EXP&#34;: &#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;, &#34;AN&#34;: &#34;D&#34; },2. 场景说明 这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。
+信息检索（RAG）: 首先使用信息检索技术从大量数据中找到与问题相关的信息。这一步骤的目的是快速定位与问题相关的医学知识和数据。
+思维链（CoT）: 接下来，通过构建思维链来分析问题。这包括理解问题的具体要求，解析各个选项，并将其与检索到的信息相对比。这一步骤有助于深入理解问题的背景和每个选项的含义。
+智能代理（Agent）: 最后，结合Agent的能力，对上述两步骤的结果进行综合分析，并得出最终答案。Agent在这里起到的是决策和验证的作用，确保答案的准确性和逻辑性。
+对于这个特定的例子，Agent首先需要识别问题是关于病态肥胖的治疗手术，然后通过RAG检索相关的医学信息，比如各种手术的类型和特点。通过CoT分析每个选项，理解它们各自的手术原理，并确定哪个选项不属于治疗病态肥胖的手术。最后，Agent将结合这些信息来验证并确定正确的答案。
+3. MedRad实现 医学知识问答系统的工作步骤：
+问题识别：
+Agent接收到用户的查询（医学问题）后，首先进行问题识别。这个过程可能包括关键词提取、问题类型分类（例如症状查询、药物信息或疾病相关知识）以及紧急度评估。 信息检索：
+Agent使用先进的信息检索技术在大量医学数据中找到与问题最相关的信息。这些数据可能来自医学数据库、研究论文、临床指南或其他医学知识库。 选项解析与对比：
+对于问题的每个可能选项（A、B、C、D），Agent分别进行解析。这个解析可能包括对医学术语的理解、病理机制、治疗方案或药物作用的解释等。 Agent将每个选项与检索到的相关信息进行对比，评估其准确性、相关性和可靠性。 综合分析：
+Agent对上述每个步骤的结果进行综合分析。这可能涉及比较不同选项的支持证据，考虑其医学逻辑和临床实践的一致性。 分析可能还包括检查信息源的可信度、最新度以及与现有医学共识的一致性。 得出结论：
+经过综合分析后，Agent得出最终答案。这个答案是基于Agent对各个选项评估的结果，选择最佳的、最符合医学证据的选项。 最终答案会反馈给用户，并提供相应的解释，解释可能包括答案的依据、相关的医学信息以及如果可行的话，进一步的建议或指示。 这个流程涵盖了从接收用户查询到提供经过深思熟虑的、信息支持的答案的整个过程。在实际应用中，Agent还会包括额外的功能，如与用户的交互能力、处理模糊或不完整查询的能力，以及持续学习和适应新信息的能力。
+以下是该功能实现的伪代码：
+function handle_medical_query(query) agent = initialize_agent() # 使用信息检索技术检索相关信息 related_information = retrieve_information(query) # 解析每个选项，并与检索到的信息进行比较 option_A_result = agent.analyze_option(&#34;A&#34;, related_information) option_B_result = agent.analyze_option(&#34;B&#34;, related_information) option_C_result = agent.analyze_option(&#34;C&#34;, related_information) option_D_result = agent.analyze_option(&#34;D&#34;, related_information) # 综合分析每个选项的结果 final_answer = agent.conclude_answer(option_A_result, option_B_result, option_C_result, option_D_result) return final_answer function retrieve_information(query) # 实现具体的信息检索逻辑 related_information = search_database(query) return related_information function analyze_option(option, information) # 解析选项，并与信息进行比较 analysis_result = compare_option_with_information(option, information) return analysis_result function conclude_answer(*options_results) # 对比各个选项的分析结果，得出最终答案 best_option = select_best_option_based_on_results(options_results) return best_option中复杂度：门诊医患对话 1. 场景示例 { &#34;input&#34;: &#34;医生，昨天我的右侧突然感到虚弱和麻木。它持续了几分钟，然后就消失了。我也有一段时间难以说话。你能帮我弄清楚发生了什么事吗？&#34;, &#34;instruction&#34;: &#34;如果你是一名医生，请根据患者的描述回答医学问题。&#34;, &#34;output&#34;: &#34;你可能经历了短暂的脑缺血发作。我想做一些医学检查来确认诊断结果。我们需要从放射学成像程序、血液学测试（血液测试）、全血细胞计数（CBC）、X射线计算机断层扫描（扫描CT）、心电图、肾功能测试（肾功能测试）和葡萄糖测量（葡萄糖水平）开始，以更好地了解发生了什么。我们能为您安排这些测试吗？&#34; }2. 场景说明 门诊医患对话场景通常涉及根据患者的描述来诊断和建议后续的医疗步骤。处理这类场景的一般范式可以从 RAG 结合 CoT 和 Agent 的角度来构建：">
+<meta name="application-name" content="Med-Eval">
+<meta name="apple-mobile-web-app-title" content="Med-Eval"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://dujh22.github.io/model/medrad%E5%85%B7%E4%BD%93%E5%9C%BA%E6%99%AF%E5%92%8C%E4%BB%A3%E7%A0%81/" title="MedRad具体场景和代码 - Med-Eval" /><link rel="prev" type="text/html" href="https://dujh22.github.io/model/medrad%E4%B8%80%E4%B8%AA%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%AF%E9%9D%A0%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E6%A1%86%E6%9E%B6/" title="MedRad:一个医学大模型的可靠辅助决策框架" /><link rel="next" type="text/html" href="https://dujh22.github.io/model/med-eval%E6%B5%8B%E8%AF%84%E7%BB%93%E6%9E%9C/" title="Med Eval测评结果" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dujh22.github.io/model/medrad%E5%85%B7%E4%BD%93%E5%9C%BA%E6%99%AF%E5%92%8C%E4%BB%A3%E7%A0%81/" /><link rel="prev" href="https://dujh22.github.io/model/medrad%E4%B8%80%E4%B8%AA%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%AF%E9%9D%A0%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E6%A1%86%E6%9E%B6/" /><link rel="next" href="https://dujh22.github.io/model/med-eval%E6%B5%8B%E8%AF%84%E7%BB%93%E6%9E%9C/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
@@ -47,16 +189,77 @@
         "name": "Author"
       },"description": ""
   }
-  </script><script src="/js/head/color-scheme.min.js"></script></head>
-  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
-      <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+      <a href="/" title="Med-Eval"><img loading="lazy" src="/fixit.svg" data-title="Med-Eval" data-alt="Med-Eval" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span id="typeit-header-desktop" class="typeit"></span></a><span class="header-subtitle"></span></div>
     <nav>
       <ul class="menu"><li class="menu-item">
-              <a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
-              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
-              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+              <a
+                class="menu-link"
+                href="/posts/med-eval"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 详情</a></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="/board"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 榜单</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/model/"
+                          
+                          
+                        >模型榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/data/"
+                          
+                          
+                        >数据榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7"
+                          
+                          
+                        >测评工具</a>
+                      </li></ul></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="https://www.opende.org.cn/arena/"
+                
+                rel="noopener noreferrer" target="_blank"
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 竞技场</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="https://www.opende.org.cn/demo/chat"
+                          
+                          rel="noopener noreferrer" target="_blank"
+                        ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> AiMed</a>
+                      </li></ul></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/more"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 加入竞技</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
           <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
         </li></ul>
     </nav>
@@ -65,27 +268,100 @@
   <div class="header-container">
     <div class="header-wrapper">
       <div class="header-title">
-        <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+        <a href="/" title="Med-Eval"><img loading="lazy" src="/fixit.svg" data-title="/fixit.svg" data-alt="/fixit.svg" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span id="typeit-header-title-mobile" class="typeit"></span></a><span class="header-subtitle"></span></div>
       <div class="menu-toggle" id="menu-toggle-mobile">
         <span></span><span></span><span></span>
       </div>
     </div>
     <nav>
-      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item menu-system">
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/med-eval"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 详情</a></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="/board"
+                    
+                    
+                  ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 榜单</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/model/"
+                          
+                          
+                        >模型榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/data/"
+                          
+                          
+                        >数据榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7"
+                          
+                          
+                        >测评工具</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="https://www.opende.org.cn/arena/"
+                    
+                    rel="noopener noreferrer" target="_blank"
+                  ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 竞技场</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="https://www.opende.org.cn/demo/chat"
+                          
+                          rel="noopener noreferrer" target="_blank"
+                        ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> AiMed</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/more"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 加入竞技</a></li><li class="menu-item menu-system">
           <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
       </ul>
     </nav>
   </div>
 </header><main class="container"><article class="page single special">
-    <div class="header"><h1 class="single-title animate__animated animate__pulse animate__faster">MedRad具体场景和代码</h1></div><div class="content" id="content"><h2 class="heading-element" id="低复杂度医学知识问答"><span>低复杂度：医学知识问答</span>
-  <a href="#%e4%bd%8e%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%8c%bb%e5%ad%a6%e7%9f%a5%e8%af%86%e9%97%ae%e7%ad%94" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><h3 class="heading-element" id="1-场景示例"><span>1. 场景示例</span>
-  <a href="#1-%e5%9c%ba%e6%99%af%e7%a4%ba%e4%be%8b" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+    <div class="header"><h1 class="single-title animate__animated animate__pulse animate__faster">MedRad具体场景和代码</h1></div><div
+      class="content"
+      id="content"
+      
+      
+    ><h2 id="低复杂度医学知识问答">低复杂度：医学知识问答</h2>
+<h3 id="1-场景示例">1. 场景示例</h3>
+<div class="highlight" id="id-1"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;QU&#34;</span>: <span style="color:#e6db74">&#34;以下都是治疗病态肥胖的手术选择，除了-&#34;</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;OP&#34;</span>:
 </span></span><span style="display:flex;"><span>        {
@@ -96,11 +372,8 @@
 </span></span><span style="display:flex;"><span>        },
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;EXP&#34;</span>: <span style="color:#e6db74">&#34;Ans.是“d”，即Roux en Y十二指肠旁路减肥手术程序包括：a。垂直带状腹足虫。可调节胃束带。Roux-en-Y胃旁路术（非Roux-en-Y-十二指肠旁路术）d。胆胰分流。十二指肠切除术病态肥胖的外科治疗被称为减肥手术。病态肥胖被定义为体重指数为35 kg/m2或以上，伴有肥胖相关的合并症，或BMI为40 kg/m2或更大，没有合并症。减肥手术导致体重减轻是由两个因素造成的。一是限制饮食。另一种是摄入食物的吸收不良。o胃限制性手术包括垂直带状胃成形术和可调节胃束带术o吸收不良手术包括胆胰分流，十二指肠切换器Roux-en-Y胃旁路既有限制性又有吸收不良的特点减肥手术：作用机制限制性垂直胃束带腹腔镜可调节胃束带大范围限制性/轻度吸收不良Roux-en-Y胃旁路大范围吸收不良/轻度限制性胆胰分流&#34;</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;AN&#34;</span>: <span style="color:#e6db74">&#34;D&#34;</span>
-</span></span><span style="display:flex;"><span>}<span style="color:#960050;background-color:#1e0010">,</span></span></span></code></pre></div><h3 class="heading-element" id="2-场景说明"><span>2. 场景说明</span>
-  <a href="#2-%e5%9c%ba%e6%99%af%e8%af%b4%e6%98%8e" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。</p>
+</span></span><span style="display:flex;"><span>}<span style="color:#960050;background-color:#1e0010">,</span></span></span></code></pre></div><h3 id="2-场景说明">2. 场景说明</h3>
+<p>这个例子是一个医学知识问答场景，其中包含一个多项选择题，目的是识别出不属于治疗病态肥胖手术选择的选项。这种类型的问题通常要求对特定医学领域有深入了解。要处理这类场景，可以从RAG (Retrieval-Augmented Generation) 结合CoT (Chain of Thought) 和Agent的角度来考虑。</p>
 <ol>
 <li>
 <p><strong>信息检索（RAG）</strong>: 首先使用信息检索技术从大量数据中找到与问题相关的信息。这一步骤的目的是快速定位与问题相关的医学知识和数据。</p>
@@ -113,11 +386,8 @@
 </li>
 </ol>
 <p>对于这个特定的例子，Agent首先需要识别问题是关于病态肥胖的治疗手术，然后通过RAG检索相关的医学信息，比如各种手术的类型和特点。通过CoT分析每个选项，理解它们各自的手术原理，并确定哪个选项不属于治疗病态肥胖的手术。最后，Agent将结合这些信息来验证并确定正确的答案。</p>
-<h3 class="heading-element" id="3-medrad实现"><span>3. MedRad实现</span>
-  <a href="#3-medrad%e5%ae%9e%e7%8e%b0" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>医学知识问答系统的工作步骤：</p>
+<h3 id="3-medrad实现">3. MedRad实现</h3>
+<p>医学知识问答系统的工作步骤：</p>
 <ol>
 <li>
 <p><strong>问题识别</strong>：</p>
@@ -155,7 +425,7 @@
 </ol>
 <p>这个流程涵盖了从接收用户查询到提供经过深思熟虑的、信息支持的答案的整个过程。在实际应用中，Agent还会包括额外的功能，如与用户的交互能力、处理模糊或不完整查询的能力，以及持续学习和适应新信息的能力。</p>
 <p>以下是该功能实现的伪代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>function handle_medical_query(query)
+<div class="highlight" id="id-2"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>function handle_medical_query(query)
 </span></span><span style="display:flex;"><span>    agent <span style="color:#f92672">=</span> initialize_agent()
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 使用信息检索技术检索相关信息</span>
@@ -185,23 +455,14 @@
 </span></span><span style="display:flex;"><span>function conclude_answer(<span style="color:#f92672">*</span>options_results)
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 对比各个选项的分析结果，得出最终答案</span>
 </span></span><span style="display:flex;"><span>    best_option <span style="color:#f92672">=</span> select_best_option_based_on_results(options_results)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_option</span></span></code></pre></div><h2 class="heading-element" id="中复杂度门诊医患对话"><span>中复杂度：门诊医患对话</span>
-  <a href="#%e4%b8%ad%e5%a4%8d%e6%9d%82%e5%ba%a6%e9%97%a8%e8%af%8a%e5%8c%bb%e6%82%a3%e5%af%b9%e8%af%9d" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><h3 class="heading-element" id="1-场景示例-1"><span>1. 场景示例</span>
-  <a href="#1-%e5%9c%ba%e6%99%af%e7%a4%ba%e4%be%8b-1" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> best_option</span></span></code></pre></div><h2 id="中复杂度门诊医患对话">中复杂度：门诊医患对话</h2>
+<h3 id="1-场景示例-1">1. 场景示例</h3>
+<div class="highlight" id="id-3"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;input&#34;</span>: <span style="color:#e6db74">&#34;医生，昨天我的右侧突然感到虚弱和麻木。它持续了几分钟，然后就消失了。我也有一段时间难以说话。你能帮我弄清楚发生了什么事吗？&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;instruction&#34;</span>: <span style="color:#e6db74">&#34;如果你是一名医生，请根据患者的描述回答医学问题。&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;output&#34;</span>: <span style="color:#e6db74">&#34;你可能经历了短暂的脑缺血发作。我想做一些医学检查来确认诊断结果。我们需要从放射学成像程序、血液学测试（血液测试）、全血细胞计数（CBC）、X射线计算机断层扫描（扫描CT）、心电图、肾功能测试（肾功能测试）和葡萄糖测量（葡萄糖水平）开始，以更好地了解发生了什么。我们能为您安排这些测试吗？&#34;</span>
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 class="heading-element" id="2-场景说明-1"><span>2. 场景说明</span>
-  <a href="#2-%e5%9c%ba%e6%99%af%e8%af%b4%e6%98%8e-1" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>门诊医患对话场景通常涉及根据患者的描述来诊断和建议后续的医疗步骤。处理这类场景的一般范式可以从 RAG 结合 CoT 和 Agent 的角度来构建：</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="2-场景说明-1">2. 场景说明</h3>
+<p>门诊医患对话场景通常涉及根据患者的描述来诊断和建议后续的医疗步骤。处理这类场景的一般范式可以从 RAG 结合 CoT 和 Agent 的角度来构建：</p>
 <ol>
 <li>
 <p><strong>患者描述分析（CoT）</strong>: 首先，需要理解患者的描述和症状。例如，在例子中，患者描述了右侧虚弱和麻木，以及说话困难的情况。这一步骤要求Agent具备对医学症状的基本理解能力，以便正确地解读患者的描述。</p>
@@ -214,11 +475,8 @@
 </li>
 </ol>
 <p>总结来说，这个场景要求Agent能够理解和分析患者的描述，检索和应用相关的医学知识，并根据这些信息提供合理的医疗建议。需要强调的是，尽管Agent可以提供初步的建议，真实情况下的医疗决策应由专业的医疗人员做出。</p>
-<h3 class="heading-element" id="3-medrad实现-1"><span>3. MedRad实现</span>
-  <a href="#3-medrad%e5%ae%9e%e7%8e%b0-1" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>针对门诊医患对话，Agent采取一系列步骤以模拟医生的临床思考过程（CoT），以此来分析、诊断和建议治疗方案。以下是这个过程的详细描述：</p>
+<h3 id="3-medrad实现-1">3. MedRad实现</h3>
+<p>针对门诊医患对话，Agent采取一系列步骤以模拟医生的临床思考过程（CoT），以此来分析、诊断和建议治疗方案。以下是这个过程的详细描述：</p>
 <ol>
 <li>
 <p><strong>患者主诉分析</strong>：</p>
@@ -271,7 +529,7 @@
 </ol>
 <p>在这个过程中，Agent在每一步都尽可能模拟医生的思考方式，以确保提供的医疗服务既符合医学标准，也能满足患者个体的需要。这个过程不仅需要高级的自然语言处理能力，还需要深入的医学知识库和强大的逻辑推理能力。</p>
 <p>以下是该功能实现的伪代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MedicalAgent</span>:
+<div class="highlight" id="id-4"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MedicalAgent</span>:
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">analyze_patient_complaint</span>(self, complaint):
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 分析患者的主诉并提取关键症状信息</span>
 </span></span><span style="display:flex;"><span>        symptoms <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>extract_symptoms(complaint)
@@ -328,17 +586,11 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 示例使用</span>
 </span></span><span style="display:flex;"><span>complaint <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;患者描述的症状和问题&#34;</span>
-</span></span><span style="display:flex;"><span>final_decision <span style="color:#f92672">=</span> outpatient_consultation(complaint)</span></span></code></pre></div><h2 class="heading-element" id="高复杂度临床病历诊断"><span>高复杂度：临床病历诊断</span>
-  <a href="#%e9%ab%98%e5%a4%8d%e6%9d%82%e5%ba%a6%e4%b8%b4%e5%ba%8a%e7%97%85%e5%8e%86%e8%af%8a%e6%96%ad" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><h3 class="heading-element" id="1-场景示例-2"><span>1. 场景示例</span>
-  <a href="#1-%e5%9c%ba%e6%99%af%e7%a4%ba%e4%be%8b-2" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><blockquote>
+</span></span><span style="display:flex;"><span>final_decision <span style="color:#f92672">=</span> outpatient_consultation(complaint)</span></span></code></pre></div><h2 id="高复杂度临床病历诊断">高复杂度：临床病历诊断</h2>
+<h3 id="1-场景示例-2">1. 场景示例</h3>
+<blockquote>
 <p>考虑到临床病历脱敏后仍可能不满足直接公开条件，这里采用大模型参照真实病历生成一个例子进行解释说明</p></blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+<div class="highlight" id="id-5"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;姓名&#34;</span>: <span style="color:#e6db74">&#34;患者&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;病室&#34;</span>: <span style="color:#e6db74">&#34;神经外科二病区&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;床号&#34;</span>: <span style="color:#e6db74">&#34;33&#34;</span>,
@@ -349,11 +601,8 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;出院时情况&#34;</span>: <span style="color:#e6db74">&#34;患者目前头痛症状明显缓解，无恶心呕吐，头部CT复查显示血肿吸收良好，无新的出血点。一般情况好，生命体征稳定。&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;出院诊断&#34;</span>: <span style="color:#e6db74">&#34;1.颅内血肿 2.轻度脑震荡&#34;</span>,
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;出院医嘱&#34;</span>: <span style="color:#e6db74">&#34;1.继续服用降颅压药物一周。2.避免剧烈运动，注意休息，避免头部再次受伤。3.一个月内到神经外科复查，必要时进行头部CT检查。4.若出现头晕、呕吐等症状，应立即返回医院就诊。5.保持良好的心态，适当进行认知及情绪调整。&#34;</span>
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 class="heading-element" id="2-场景说明-2"><span>2. 场景说明</span>
-  <a href="#2-%e5%9c%ba%e6%99%af%e8%af%b4%e6%98%8e-2" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>临床病历诊断场景是医学领域中最具挑战性的场景之一，因为它不仅涉及到对病历数据的全面分析，还需要将这些信息与复杂的医学知识体系相结合。处理这种场景的一般范式可以从RAG结合CoT和Agent的角度来构建：</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="2-场景说明-2">2. 场景说明</h3>
+<p>临床病历诊断场景是医学领域中最具挑战性的场景之一，因为它不仅涉及到对病历数据的全面分析，还需要将这些信息与复杂的医学知识体系相结合。处理这种场景的一般范式可以从RAG结合CoT和Agent的角度来构建：</p>
 <ol>
 <li>
 <p><strong>病历数据分析（CoT）</strong>: 首先，需要彻底分析病历中的所有信息，包括患者的基本信息、入院和出院的诊断、治疗过程、出院时的情况以及出院医嘱。这一步骤要求Agent能够准确理解并整合病历中的复杂信息。</p>
@@ -378,11 +627,8 @@
 <li>提供针对性的建议，如定期复查、生活方式调整和可能的康复治疗。</li>
 </ul>
 <p>总结来说，这个场景要求Agent具有深厚的医学知识、对临床数据的高度理解能力，以及综合分析和诊断的能力。这种场景的处理通常超出了一般智能系统的能力范围，需要专业的医疗人员进行深入分析和判断。</p>
-<h3 class="heading-element" id="3-medrad实现-2"><span>3. MedRad实现</span>
-  <a href="#3-medrad%e5%ae%9e%e7%8e%b0-2" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>针对临床病历诊断的Agent工作流程，是一个系统性的过程，它模仿医生的临床思考路径（CoT），进行数据收集、分析和决策制定。以下是这个过程的详细描述：</p>
+<h3 id="3-medrad实现-2">3. MedRad实现</h3>
+<p>针对临床病历诊断的Agent工作流程，是一个系统性的过程，它模仿医生的临床思考路径（CoT），进行数据收集、分析和决策制定。以下是这个过程的详细描述：</p>
 <ol>
 <li><strong>病历内容拆解</strong>：
 <ul>
@@ -419,7 +665,7 @@
 </ol>
 <p>在整个流程中，Agent的决策是基于一个完整的数据集，其中包括个人病历、历史数据、临床资源和相似病例的信息。这确保了Agent所提供的医疗决策既数据驱动又个性化，满足了临床医学对于细致和精确诊断的要求。</p>
 <p>以下是该功能实现的伪代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClinicalDiagnosisAgent</span>:
+<div class="highlight" id="id-6"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClinicalDiagnosisAgent</span>:
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">analyze_medical_record</span>(self, medical_record):
 </span></span><span style="display:flex;"><span>        basic_info <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decompose_medical_record(medical_record)
@@ -476,13 +722,13 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 使用伪代码进行病历诊断</span>
 </span></span><span style="display:flex;"><span>medical_record <span style="color:#f92672">=</span> <span style="color:#f92672">...</span>  <span style="color:#75715e"># 临床病历数据</span>
 </span></span><span style="display:flex;"><span>final_plan <span style="color:#f92672">=</span> conduct_clinical_diagnosis(medical_record)</span></span></code></pre></div></div></article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.148.2"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.0-alpha-20250721024521-a1cd700b"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">
-              <a href="/"></a></span></div></div>
+    <div class="footer-container"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">Public - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span></div><div class="footer-line statistics"></div></div>
   </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
         </div></div><div id="mask"></div><noscript>
-    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+    <div class="noscript-warning">Theme FixIt works best with JavaScript enabled.</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"version":"v0.4.0-alpha-20250721024521-a1cd700b"};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-desktop":"Med-Eval 医疗大语言模型测评基准","typeit-header-title-mobile":"Med-Eval 医疗大语言模型测评基准"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-desktop":["typeit-header-desktop"],"typeit-header-title-mobile":["typeit-header-title-mobile"]},"duration":-1,"loop":false,"speed":100}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

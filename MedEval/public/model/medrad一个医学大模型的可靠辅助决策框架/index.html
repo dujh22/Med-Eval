@@ -6,14 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
     <title>MedRad:一个医学大模型的可靠辅助决策框架 - Med-Eval</title><meta name="author" content="">
+<meta name="author-link" content="">
 <meta name="description" content="摘要: 随着医学领域数据的激增和临床决策的复杂性增加，需要强大的计算工具来辅助医生作出准确、可靠的决策。虽然现有研究已经在准确性上取得进展，但大模型在可靠性和稳定性方面的不足显而易见。为此，我们提出了MedRad框架，一个结合深度知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理（Agent）的系统，以提高决策的可靠性。本研究的早期阶段集中于构建医学领域的大型语言模型和通用模型训练算法。进一步，我们将重点转向如何在医学知识问答、门诊对话和临床病历诊断等具有不同复杂度的场景中利用这些技术实现高可靠性的医学决策。实验结果显示，MedRad在上述场景中能够提供高质量的决策路径。我们的框架通过与基座模型的松耦合设计，展现了在不同医学场景中的强大适应性。
 关键词: 医学大模型、决策支持系统、可靠性、Chain of Thought、Retrieval-Augmented Generation、Agent
-1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。
-">
+
+1. 引言
+在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。
+随着人工智能的迅速发展，机器学习和大数据分析已被引入到决策支持工具中，以增强它们处理复杂数据的能力。这些技术在提升诊断精度和治疗效率方面取得了一定的成就，尤其是在图像识别和预测建模领域。然而，仅有的准确性并不足以应对医学领域的全部挑战。现有的人工智能系统通常是针对特定任务设计的，缺乏足够的灵活性来适应医学领域不断变化的需求和复杂的临床场景。此外，这些系统在解释能力和决策透明度方面往往存在不足，这限制了它们在临床实践中的应用，因为医疗专业人员和患者都需要理解决策背后的逻辑。此外，随着医疗实践越来越依赖数据驱动的方法，医生和医疗专业人员的角色正在发生变化，他们需要能够信任并理解这些工具提供的信息和建议。
+正是基于这些挑战，我们开发了MedRad框架。MedRad不仅着重于提升决策的准确性，而且特别强调在保持这种准确性的同时增强决策的可靠性和稳定性。通过结合最新的人工智能技术，如深度学习、自然语言处理，和医学知识工程，MedRad旨在创建一个更加智能和适应性强的决策支持系统。该系统不仅能够处理和分析复杂的医疗数据，还能在提供决策时给出清晰、可解释的逻辑路径，使医生能够更好地理解和信任其提供的建议。通过这种方式，MedRad框架寻求成为医疗专业人员的一个真正的合作伙伴，支持他们在日益复杂的医疗环境中做出更好的决策。
+2. 相关工作
+本节回顾了医学决策支持系统的发展历程，以及大模型在医学领域的应用现状。我们将探讨现有模型在处理医学数据时的局限性，尤其是在稳定性和可靠性方面的不足，并分析了Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术对于提高医学决策质量的潜在贡献。
+2.1 医学决策支持系统的发展
+医学决策支持系统（CDSS）的历史可以追溯到20世纪70年代，当时的系统主要基于规则的推理来辅助临床决策。随着时间的推移，这些系统逐渐集成了更复杂的算法，包括基于知识的系统和基于数据的机器学习方法。在21世纪初，随着计算能力的提升和电子健康记录（EHR）的普及，CDSS开始利用大数据进行更复杂的预测和分析。尽管这些系统在处理标准化数据方面取得了显著进展，但在解释非结构化医疗数据、适应新的临床实践和医学知识时，它们仍显示出局限性。
+2.2 大模型在医学领域的应用
+近年来，随着深度学习技术的发展，大型预训练模型，如GPT和BERT，已经开始在医学领域中发挥作用。这些模型能够处理大量非结构化的医疗文本数据，提供更深入的见解和预测。例如，它们被用于自动化病历摘要、医学文献分析、疾病预测以及提供个性化的患者护理建议。然而，这些大型模型在处理高度专业化的医学知识时仍然面临挑战，尤其是在理解复杂医学术语和临床指南方面。
+2.3 医学决策的稳定性和可靠性
+尽管大型模型在处理医学数据方面显示出潜力，但其在确保决策稳定性和可靠性方面存在不足。这主要是由于这些模型在训练过程中缺乏对医学领域特定知识的深入理解。此外，这些模型通常缺乏足够的透明度，使得医疗专业人员难以理解和信任其决策过程和结果。因此，需要开发更加先进的方法来提高这些系统在医学决策中的稳定性和可靠性。
+2.4 Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术
+CoT推理技术通过模拟医生的思考过程来增强决策的逻辑性和透明度。通过将决策过程分解为一系列逻辑步骤，CoT提供了一种更加直观和可解释的方式来解释模型的推理过程。另一方面，RAG技术通过结合强大的检索能力和生成能力来增强模型对医学知识的理解。这种方法允许模型在做出决策前，先从大量医学数据中检索相关信息，从而提高其决策的准确性和深度。结合这两种技术，可以显著提高医学决策支持系统的性能，尤其是在处理复杂和非标准化的临床情况时。
+综上所述，尽管当前的医学大模型在处理特定类型的医疗数据方面取得了进展，但在提高医学决策的稳定性和可靠性方面还有很长的路要走。
+3. MedRad框架
+本节详细介绍MedRad框架的架构和工作原理。我们将解释如何结合CoT、RAG和Agent技术来挖掘大型语言模型的潜力，并描述这一多模块系统是如何协同工作以提升决策质量的。
+框架图：
+https://gitee.com/dujh22/pic/raw/master/MedRad.png
+详细见本目录下的：“MedRad具体场景和代码”
+
+注意：由于本项目前一版本的论文还未完成：MedRad: 一个医学大模型的可靠辅助决策框架
+谷歌云盘链接： https://drive.google.com/file/d/1fqFGu4y3uhspXWeRlqiCsBHsl_NjNaen/view?usp=sharing
+百度网盘链接: https://pan.baidu.com/s/1qeWx2RrwiErLc8vVXS0pBA?pwd=2024 提取码: 2024" /><meta name="keywords" content='Hugo, FixIt' />
   <meta itemprop="name" content="MedRad:一个医学大模型的可靠辅助决策框架">
   <meta itemprop="description" content="摘要: 随着医学领域数据的激增和临床决策的复杂性增加，需要强大的计算工具来辅助医生作出准确、可靠的决策。虽然现有研究已经在准确性上取得进展，但大模型在可靠性和稳定性方面的不足显而易见。为此，我们提出了MedRad框架，一个结合深度知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理（Agent）的系统，以提高决策的可靠性。本研究的早期阶段集中于构建医学领域的大型语言模型和通用模型训练算法。进一步，我们将重点转向如何在医学知识问答、门诊对话和临床病历诊断等具有不同复杂度的场景中利用这些技术实现高可靠性的医学决策。实验结果显示，MedRad在上述场景中能够提供高质量的决策路径。我们的框架通过与基座模型的松耦合设计，展现了在不同医学场景中的强大适应性。
 关键词: 医学大模型、决策支持系统、可靠性、Chain of Thought、Retrieval-Augmented Generation、Agent
-1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。">
+1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。
+随着人工智能的迅速发展，机器学习和大数据分析已被引入到决策支持工具中，以增强它们处理复杂数据的能力。这些技术在提升诊断精度和治疗效率方面取得了一定的成就，尤其是在图像识别和预测建模领域。然而，仅有的准确性并不足以应对医学领域的全部挑战。现有的人工智能系统通常是针对特定任务设计的，缺乏足够的灵活性来适应医学领域不断变化的需求和复杂的临床场景。此外，这些系统在解释能力和决策透明度方面往往存在不足，这限制了它们在临床实践中的应用，因为医疗专业人员和患者都需要理解决策背后的逻辑。此外，随着医疗实践越来越依赖数据驱动的方法，医生和医疗专业人员的角色正在发生变化，他们需要能够信任并理解这些工具提供的信息和建议。
+正是基于这些挑战，我们开发了MedRad框架。MedRad不仅着重于提升决策的准确性，而且特别强调在保持这种准确性的同时增强决策的可靠性和稳定性。通过结合最新的人工智能技术，如深度学习、自然语言处理，和医学知识工程，MedRad旨在创建一个更加智能和适应性强的决策支持系统。该系统不仅能够处理和分析复杂的医疗数据，还能在提供决策时给出清晰、可解释的逻辑路径，使医生能够更好地理解和信任其提供的建议。通过这种方式，MedRad框架寻求成为医疗专业人员的一个真正的合作伙伴，支持他们在日益复杂的医疗环境中做出更好的决策。
+2. 相关工作 本节回顾了医学决策支持系统的发展历程，以及大模型在医学领域的应用现状。我们将探讨现有模型在处理医学数据时的局限性，尤其是在稳定性和可靠性方面的不足，并分析了Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术对于提高医学决策质量的潜在贡献。
+2.1 医学决策支持系统的发展 医学决策支持系统（CDSS）的历史可以追溯到20世纪70年代，当时的系统主要基于规则的推理来辅助临床决策。随着时间的推移，这些系统逐渐集成了更复杂的算法，包括基于知识的系统和基于数据的机器学习方法。在21世纪初，随着计算能力的提升和电子健康记录（EHR）的普及，CDSS开始利用大数据进行更复杂的预测和分析。尽管这些系统在处理标准化数据方面取得了显著进展，但在解释非结构化医疗数据、适应新的临床实践和医学知识时，它们仍显示出局限性。
+2.2 大模型在医学领域的应用 近年来，随着深度学习技术的发展，大型预训练模型，如GPT和BERT，已经开始在医学领域中发挥作用。这些模型能够处理大量非结构化的医疗文本数据，提供更深入的见解和预测。例如，它们被用于自动化病历摘要、医学文献分析、疾病预测以及提供个性化的患者护理建议。然而，这些大型模型在处理高度专业化的医学知识时仍然面临挑战，尤其是在理解复杂医学术语和临床指南方面。
+2.3 医学决策的稳定性和可靠性 尽管大型模型在处理医学数据方面显示出潜力，但其在确保决策稳定性和可靠性方面存在不足。这主要是由于这些模型在训练过程中缺乏对医学领域特定知识的深入理解。此外，这些模型通常缺乏足够的透明度，使得医疗专业人员难以理解和信任其决策过程和结果。因此，需要开发更加先进的方法来提高这些系统在医学决策中的稳定性和可靠性。
+2.4 Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术 CoT推理技术通过模拟医生的思考过程来增强决策的逻辑性和透明度。通过将决策过程分解为一系列逻辑步骤，CoT提供了一种更加直观和可解释的方式来解释模型的推理过程。另一方面，RAG技术通过结合强大的检索能力和生成能力来增强模型对医学知识的理解。这种方法允许模型在做出决策前，先从大量医学数据中检索相关信息，从而提高其决策的准确性和深度。结合这两种技术，可以显著提高医学决策支持系统的性能，尤其是在处理复杂和非标准化的临床情况时。
+综上所述，尽管当前的医学大模型在处理特定类型的医疗数据方面取得了进展，但在提高医学决策的稳定性和可靠性方面还有很长的路要走。
+3. MedRad框架 本节详细介绍MedRad框架的架构和工作原理。我们将解释如何结合CoT、RAG和Agent技术来挖掘大型语言模型的潜力，并描述这一多模块系统是如何协同工作以提升决策质量的。
+框架图：
+https://gitee.com/dujh22/pic/raw/master/MedRad.png
+详细见本目录下的：“MedRad具体场景和代码”
+注意：由于本项目前一版本的论文还未完成：MedRad: 一个医学大模型的可靠辅助决策框架
+谷歌云盘链接： https://drive.google.com/file/d/1fqFGu4y3uhspXWeRlqiCsBHsl_NjNaen/view?usp=sharing
+百度网盘链接: https://pan.baidu.com/s/1qeWx2RrwiErLc8vVXS0pBA?pwd=2024 提取码: 2024">
   <meta itemprop="datePublished" content="2024-01-03T12:22:31+08:00">
   <meta itemprop="dateModified" content="2024-01-03T12:22:31+08:00">
   <meta itemprop="wordCount" content="80"><meta property="og:url" content="https://dujh22.github.io/model/medrad%E4%B8%80%E4%B8%AA%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%AF%E9%9D%A0%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E6%A1%86%E6%9E%B6/">
@@ -21,7 +60,22 @@
   <meta property="og:title" content="MedRad:一个医学大模型的可靠辅助决策框架">
   <meta property="og:description" content="摘要: 随着医学领域数据的激增和临床决策的复杂性增加，需要强大的计算工具来辅助医生作出准确、可靠的决策。虽然现有研究已经在准确性上取得进展，但大模型在可靠性和稳定性方面的不足显而易见。为此，我们提出了MedRad框架，一个结合深度知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理（Agent）的系统，以提高决策的可靠性。本研究的早期阶段集中于构建医学领域的大型语言模型和通用模型训练算法。进一步，我们将重点转向如何在医学知识问答、门诊对话和临床病历诊断等具有不同复杂度的场景中利用这些技术实现高可靠性的医学决策。实验结果显示，MedRad在上述场景中能够提供高质量的决策路径。我们的框架通过与基座模型的松耦合设计，展现了在不同医学场景中的强大适应性。
 关键词: 医学大模型、决策支持系统、可靠性、Chain of Thought、Retrieval-Augmented Generation、Agent
-1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。">
+1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。
+随着人工智能的迅速发展，机器学习和大数据分析已被引入到决策支持工具中，以增强它们处理复杂数据的能力。这些技术在提升诊断精度和治疗效率方面取得了一定的成就，尤其是在图像识别和预测建模领域。然而，仅有的准确性并不足以应对医学领域的全部挑战。现有的人工智能系统通常是针对特定任务设计的，缺乏足够的灵活性来适应医学领域不断变化的需求和复杂的临床场景。此外，这些系统在解释能力和决策透明度方面往往存在不足，这限制了它们在临床实践中的应用，因为医疗专业人员和患者都需要理解决策背后的逻辑。此外，随着医疗实践越来越依赖数据驱动的方法，医生和医疗专业人员的角色正在发生变化，他们需要能够信任并理解这些工具提供的信息和建议。
+正是基于这些挑战，我们开发了MedRad框架。MedRad不仅着重于提升决策的准确性，而且特别强调在保持这种准确性的同时增强决策的可靠性和稳定性。通过结合最新的人工智能技术，如深度学习、自然语言处理，和医学知识工程，MedRad旨在创建一个更加智能和适应性强的决策支持系统。该系统不仅能够处理和分析复杂的医疗数据，还能在提供决策时给出清晰、可解释的逻辑路径，使医生能够更好地理解和信任其提供的建议。通过这种方式，MedRad框架寻求成为医疗专业人员的一个真正的合作伙伴，支持他们在日益复杂的医疗环境中做出更好的决策。
+2. 相关工作 本节回顾了医学决策支持系统的发展历程，以及大模型在医学领域的应用现状。我们将探讨现有模型在处理医学数据时的局限性，尤其是在稳定性和可靠性方面的不足，并分析了Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术对于提高医学决策质量的潜在贡献。
+2.1 医学决策支持系统的发展 医学决策支持系统（CDSS）的历史可以追溯到20世纪70年代，当时的系统主要基于规则的推理来辅助临床决策。随着时间的推移，这些系统逐渐集成了更复杂的算法，包括基于知识的系统和基于数据的机器学习方法。在21世纪初，随着计算能力的提升和电子健康记录（EHR）的普及，CDSS开始利用大数据进行更复杂的预测和分析。尽管这些系统在处理标准化数据方面取得了显著进展，但在解释非结构化医疗数据、适应新的临床实践和医学知识时，它们仍显示出局限性。
+2.2 大模型在医学领域的应用 近年来，随着深度学习技术的发展，大型预训练模型，如GPT和BERT，已经开始在医学领域中发挥作用。这些模型能够处理大量非结构化的医疗文本数据，提供更深入的见解和预测。例如，它们被用于自动化病历摘要、医学文献分析、疾病预测以及提供个性化的患者护理建议。然而，这些大型模型在处理高度专业化的医学知识时仍然面临挑战，尤其是在理解复杂医学术语和临床指南方面。
+2.3 医学决策的稳定性和可靠性 尽管大型模型在处理医学数据方面显示出潜力，但其在确保决策稳定性和可靠性方面存在不足。这主要是由于这些模型在训练过程中缺乏对医学领域特定知识的深入理解。此外，这些模型通常缺乏足够的透明度，使得医疗专业人员难以理解和信任其决策过程和结果。因此，需要开发更加先进的方法来提高这些系统在医学决策中的稳定性和可靠性。
+2.4 Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术 CoT推理技术通过模拟医生的思考过程来增强决策的逻辑性和透明度。通过将决策过程分解为一系列逻辑步骤，CoT提供了一种更加直观和可解释的方式来解释模型的推理过程。另一方面，RAG技术通过结合强大的检索能力和生成能力来增强模型对医学知识的理解。这种方法允许模型在做出决策前，先从大量医学数据中检索相关信息，从而提高其决策的准确性和深度。结合这两种技术，可以显著提高医学决策支持系统的性能，尤其是在处理复杂和非标准化的临床情况时。
+综上所述，尽管当前的医学大模型在处理特定类型的医疗数据方面取得了进展，但在提高医学决策的稳定性和可靠性方面还有很长的路要走。
+3. MedRad框架 本节详细介绍MedRad框架的架构和工作原理。我们将解释如何结合CoT、RAG和Agent技术来挖掘大型语言模型的潜力，并描述这一多模块系统是如何协同工作以提升决策质量的。
+框架图：
+https://gitee.com/dujh22/pic/raw/master/MedRad.png
+详细见本目录下的：“MedRad具体场景和代码”
+注意：由于本项目前一版本的论文还未完成：MedRad: 一个医学大模型的可靠辅助决策框架
+谷歌云盘链接： https://drive.google.com/file/d/1fqFGu4y3uhspXWeRlqiCsBHsl_NjNaen/view?usp=sharing
+百度网盘链接: https://pan.baidu.com/s/1qeWx2RrwiErLc8vVXS0pBA?pwd=2024 提取码: 2024">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="model">
@@ -32,11 +86,26 @@
   <meta name="twitter:title" content="MedRad:一个医学大模型的可靠辅助决策框架">
   <meta name="twitter:description" content="摘要: 随着医学领域数据的激增和临床决策的复杂性增加，需要强大的计算工具来辅助医生作出准确、可靠的决策。虽然现有研究已经在准确性上取得进展，但大模型在可靠性和稳定性方面的不足显而易见。为此，我们提出了MedRad框架，一个结合深度知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理（Agent）的系统，以提高决策的可靠性。本研究的早期阶段集中于构建医学领域的大型语言模型和通用模型训练算法。进一步，我们将重点转向如何在医学知识问答、门诊对话和临床病历诊断等具有不同复杂度的场景中利用这些技术实现高可靠性的医学决策。实验结果显示，MedRad在上述场景中能够提供高质量的决策路径。我们的框架通过与基座模型的松耦合设计，展现了在不同医学场景中的强大适应性。
 关键词: 医学大模型、决策支持系统、可靠性、Chain of Thought、Retrieval-Augmented Generation、Agent
-1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。">
-<meta name="application-name" content="FixIt">
-<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+1. 引言 在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。
+随着人工智能的迅速发展，机器学习和大数据分析已被引入到决策支持工具中，以增强它们处理复杂数据的能力。这些技术在提升诊断精度和治疗效率方面取得了一定的成就，尤其是在图像识别和预测建模领域。然而，仅有的准确性并不足以应对医学领域的全部挑战。现有的人工智能系统通常是针对特定任务设计的，缺乏足够的灵活性来适应医学领域不断变化的需求和复杂的临床场景。此外，这些系统在解释能力和决策透明度方面往往存在不足，这限制了它们在临床实践中的应用，因为医疗专业人员和患者都需要理解决策背后的逻辑。此外，随着医疗实践越来越依赖数据驱动的方法，医生和医疗专业人员的角色正在发生变化，他们需要能够信任并理解这些工具提供的信息和建议。
+正是基于这些挑战，我们开发了MedRad框架。MedRad不仅着重于提升决策的准确性，而且特别强调在保持这种准确性的同时增强决策的可靠性和稳定性。通过结合最新的人工智能技术，如深度学习、自然语言处理，和医学知识工程，MedRad旨在创建一个更加智能和适应性强的决策支持系统。该系统不仅能够处理和分析复杂的医疗数据，还能在提供决策时给出清晰、可解释的逻辑路径，使医生能够更好地理解和信任其提供的建议。通过这种方式，MedRad框架寻求成为医疗专业人员的一个真正的合作伙伴，支持他们在日益复杂的医疗环境中做出更好的决策。
+2. 相关工作 本节回顾了医学决策支持系统的发展历程，以及大模型在医学领域的应用现状。我们将探讨现有模型在处理医学数据时的局限性，尤其是在稳定性和可靠性方面的不足，并分析了Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术对于提高医学决策质量的潜在贡献。
+2.1 医学决策支持系统的发展 医学决策支持系统（CDSS）的历史可以追溯到20世纪70年代，当时的系统主要基于规则的推理来辅助临床决策。随着时间的推移，这些系统逐渐集成了更复杂的算法，包括基于知识的系统和基于数据的机器学习方法。在21世纪初，随着计算能力的提升和电子健康记录（EHR）的普及，CDSS开始利用大数据进行更复杂的预测和分析。尽管这些系统在处理标准化数据方面取得了显著进展，但在解释非结构化医疗数据、适应新的临床实践和医学知识时，它们仍显示出局限性。
+2.2 大模型在医学领域的应用 近年来，随着深度学习技术的发展，大型预训练模型，如GPT和BERT，已经开始在医学领域中发挥作用。这些模型能够处理大量非结构化的医疗文本数据，提供更深入的见解和预测。例如，它们被用于自动化病历摘要、医学文献分析、疾病预测以及提供个性化的患者护理建议。然而，这些大型模型在处理高度专业化的医学知识时仍然面临挑战，尤其是在理解复杂医学术语和临床指南方面。
+2.3 医学决策的稳定性和可靠性 尽管大型模型在处理医学数据方面显示出潜力，但其在确保决策稳定性和可靠性方面存在不足。这主要是由于这些模型在训练过程中缺乏对医学领域特定知识的深入理解。此外，这些模型通常缺乏足够的透明度，使得医疗专业人员难以理解和信任其决策过程和结果。因此，需要开发更加先进的方法来提高这些系统在医学决策中的稳定性和可靠性。
+2.4 Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术 CoT推理技术通过模拟医生的思考过程来增强决策的逻辑性和透明度。通过将决策过程分解为一系列逻辑步骤，CoT提供了一种更加直观和可解释的方式来解释模型的推理过程。另一方面，RAG技术通过结合强大的检索能力和生成能力来增强模型对医学知识的理解。这种方法允许模型在做出决策前，先从大量医学数据中检索相关信息，从而提高其决策的准确性和深度。结合这两种技术，可以显著提高医学决策支持系统的性能，尤其是在处理复杂和非标准化的临床情况时。
+综上所述，尽管当前的医学大模型在处理特定类型的医疗数据方面取得了进展，但在提高医学决策的稳定性和可靠性方面还有很长的路要走。
+3. MedRad框架 本节详细介绍MedRad框架的架构和工作原理。我们将解释如何结合CoT、RAG和Agent技术来挖掘大型语言模型的潜力，并描述这一多模块系统是如何协同工作以提升决策质量的。
+框架图：
+https://gitee.com/dujh22/pic/raw/master/MedRad.png
+详细见本目录下的：“MedRad具体场景和代码”
+注意：由于本项目前一版本的论文还未完成：MedRad: 一个医学大模型的可靠辅助决策框架
+谷歌云盘链接： https://drive.google.com/file/d/1fqFGu4y3uhspXWeRlqiCsBHsl_NjNaen/view?usp=sharing
+百度网盘链接: https://pan.baidu.com/s/1qeWx2RrwiErLc8vVXS0pBA?pwd=2024 提取码: 2024">
+<meta name="application-name" content="Med-Eval">
+<meta name="apple-mobile-web-app-title" content="Med-Eval"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://dujh22.github.io/model/medrad%E4%B8%80%E4%B8%AA%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%AF%E9%9D%A0%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E6%A1%86%E6%9E%B6/" title="MedRad:一个医学大模型的可靠辅助决策框架 - Med-Eval" /><link rel="prev" type="text/html" href="https://dujh22.github.io/data/%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%94%A8%E7%9F%A5%E8%AF%86%E5%B7%A5%E7%A8%8B%E6%95%B0%E6%8D%AE%E8%AF%A6%E6%83%85/" title="医学大模型用知识工程数据详情" /><link rel="next" type="text/html" href="https://dujh22.github.io/model/medrad%E5%85%B7%E4%BD%93%E5%9C%BA%E6%99%AF%E5%92%8C%E4%BB%A3%E7%A0%81/" title="MedRad具体场景和代码" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dujh22.github.io/model/medrad%E4%B8%80%E4%B8%AA%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%AF%E9%9D%A0%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E6%A1%86%E6%9E%B6/" /><link rel="prev" href="https://dujh22.github.io/model/%E5%8C%BB%E5%AD%A6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%A6%9C%E5%8D%95v2/" /><link rel="next" href="https://dujh22.github.io/model/medrad%E5%85%B7%E4%BD%93%E5%9C%BA%E6%99%AF%E5%92%8C%E4%BB%A3%E7%A0%81/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
@@ -55,16 +124,77 @@
         "name": "Author"
       },"description": ""
   }
-  </script><script src="/js/head/color-scheme.min.js"></script></head>
-  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
-      <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+      <a href="/" title="Med-Eval"><img loading="lazy" src="/fixit.svg" data-title="Med-Eval" data-alt="Med-Eval" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span id="typeit-header-desktop" class="typeit"></span></a><span class="header-subtitle"></span></div>
     <nav>
       <ul class="menu"><li class="menu-item">
-              <a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
-              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
-              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+              <a
+                class="menu-link"
+                href="/posts/med-eval"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 详情</a></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="/board"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 榜单</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/model/"
+                          
+                          
+                        >模型榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/data/"
+                          
+                          
+                        >数据榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7"
+                          
+                          
+                        >测评工具</a>
+                      </li></ul></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="https://www.opende.org.cn/arena/"
+                
+                rel="noopener noreferrer" target="_blank"
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 竞技场</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="https://www.opende.org.cn/demo/chat"
+                          
+                          rel="noopener noreferrer" target="_blank"
+                        ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> AiMed</a>
+                      </li></ul></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/more"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 加入竞技</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
           <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
         </li></ul>
     </nav>
@@ -73,59 +203,117 @@
   <div class="header-container">
     <div class="header-wrapper">
       <div class="header-title">
-        <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+        <a href="/" title="Med-Eval"><img loading="lazy" src="/fixit.svg" data-title="/fixit.svg" data-alt="/fixit.svg" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span id="typeit-header-title-mobile" class="typeit"></span></a><span class="header-subtitle"></span></div>
       <div class="menu-toggle" id="menu-toggle-mobile">
         <span></span><span></span><span></span>
       </div>
     </div>
     <nav>
-      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item menu-system">
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/med-eval"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 详情</a></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="/board"
+                    
+                    
+                  ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 榜单</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/model/"
+                          
+                          
+                        >模型榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/data/"
+                          
+                          
+                        >数据榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7"
+                          
+                          
+                        >测评工具</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="https://www.opende.org.cn/arena/"
+                    
+                    rel="noopener noreferrer" target="_blank"
+                  ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 竞技场</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="https://www.opende.org.cn/demo/chat"
+                          
+                          rel="noopener noreferrer" target="_blank"
+                        ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> AiMed</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/more"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 加入竞技</a></li><li class="menu-item menu-system">
           <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
       </ul>
     </nav>
   </div>
 </header><main class="container"><article class="page single special">
-    <div class="header"><h1 class="single-title animate__animated animate__pulse animate__faster">MedRad:一个医学大模型的可靠辅助决策框架</h1></div><div class="content" id="content"><p><strong>摘要</strong>: 随着医学领域数据的激增和临床决策的复杂性增加，需要强大的计算工具来辅助医生作出准确、可靠的决策。虽然现有研究已经在准确性上取得进展，但大模型在可靠性和稳定性方面的不足显而易见。为此，我们提出了MedRad框架，一个结合深度知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理（Agent）的系统，以提高决策的可靠性。本研究的早期阶段集中于构建医学领域的大型语言模型和通用模型训练算法。进一步，我们将重点转向如何在医学知识问答、门诊对话和临床病历诊断等具有不同复杂度的场景中利用这些技术实现高可靠性的医学决策。实验结果显示，MedRad在上述场景中能够提供高质量的决策路径。我们的框架通过与基座模型的松耦合设计，展现了在不同医学场景中的强大适应性。</p>
+    <div class="header"><h1 class="single-title animate__animated animate__pulse animate__faster">MedRad:一个医学大模型的可靠辅助决策框架</h1></div><div
+      class="content"
+      id="content"
+      
+      
+    ><p><strong>摘要</strong>: 随着医学领域数据的激增和临床决策的复杂性增加，需要强大的计算工具来辅助医生作出准确、可靠的决策。虽然现有研究已经在准确性上取得进展，但大模型在可靠性和稳定性方面的不足显而易见。为此，我们提出了MedRad框架，一个结合深度知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理（Agent）的系统，以提高决策的可靠性。本研究的早期阶段集中于构建医学领域的大型语言模型和通用模型训练算法。进一步，我们将重点转向如何在医学知识问答、门诊对话和临床病历诊断等具有不同复杂度的场景中利用这些技术实现高可靠性的医学决策。实验结果显示，MedRad在上述场景中能够提供高质量的决策路径。我们的框架通过与基座模型的松耦合设计，展现了在不同医学场景中的强大适应性。</p>
 <p><strong>关键词</strong>: 医学大模型、决策支持系统、可靠性、Chain of Thought、Retrieval-Augmented Generation、Agent</p>
 <hr>
-<h2 class="heading-element" id="1-引言"><span><strong>1. 引言</strong></span>
-  <a href="#1-%e5%bc%95%e8%a8%80" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。</p>
+<h2 id="1-引言"><strong>1. 引言</strong></h2>
+<p>在医学领域，高质量的决策是病人健康和生命的守护者。医生们经常面临着需要在短时间内处理大量信息并做出关键决策的压力。这种决策的复杂性由于医疗数据的海量增长和临床案例的多变性而不断增加。传统的决策支持系统，在处理标准化流程时效果显著，但在解读非结构化的医疗数据、处理复杂病例以及适应不断演变的医学知识面前则显得力不从心。这些系统在准确解释临床数据、适应新的治疗协议以及应对罕见病症方面，常常表现出灵活性不足和可靠性不高的问题。</p>
 <p>随着人工智能的迅速发展，机器学习和大数据分析已被引入到决策支持工具中，以增强它们处理复杂数据的能力。这些技术在提升诊断精度和治疗效率方面取得了一定的成就，尤其是在图像识别和预测建模领域。然而，仅有的准确性并不足以应对医学领域的全部挑战。现有的人工智能系统通常是针对特定任务设计的，缺乏足够的灵活性来适应医学领域不断变化的需求和复杂的临床场景。此外，这些系统在解释能力和决策透明度方面往往存在不足，这限制了它们在临床实践中的应用，因为医疗专业人员和患者都需要理解决策背后的逻辑。此外，随着医疗实践越来越依赖数据驱动的方法，医生和医疗专业人员的角色正在发生变化，他们需要能够信任并理解这些工具提供的信息和建议。</p>
 <p>正是基于这些挑战，我们开发了MedRad框架。MedRad不仅着重于提升决策的准确性，而且特别强调在保持这种准确性的同时增强决策的可靠性和稳定性。通过结合最新的人工智能技术，如深度学习、自然语言处理，和医学知识工程，MedRad旨在创建一个更加智能和适应性强的决策支持系统。该系统不仅能够处理和分析复杂的医疗数据，还能在提供决策时给出清晰、可解释的逻辑路径，使医生能够更好地理解和信任其提供的建议。通过这种方式，MedRad框架寻求成为医疗专业人员的一个真正的合作伙伴，支持他们在日益复杂的医疗环境中做出更好的决策。</p>
-<h2 class="heading-element" id="2-相关工作"><span><strong>2. 相关工作</strong></span>
-  <a href="#2-%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>本节回顾了医学决策支持系统的发展历程，以及大模型在医学领域的应用现状。我们将探讨现有模型在处理医学数据时的局限性，尤其是在稳定性和可靠性方面的不足，并分析了Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术对于提高医学决策质量的潜在贡献。</p>
-<h3 class="heading-element" id="21-医学决策支持系统的发展"><span>2.1 <strong>医学决策支持系统的发展</strong></span>
-  <a href="#21-%e5%8c%bb%e5%ad%a6%e5%86%b3%e7%ad%96%e6%94%af%e6%8c%81%e7%b3%bb%e7%bb%9f%e7%9a%84%e5%8f%91%e5%b1%95" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>医学决策支持系统（CDSS）的历史可以追溯到20世纪70年代，当时的系统主要基于规则的推理来辅助临床决策。随着时间的推移，这些系统逐渐集成了更复杂的算法，包括基于知识的系统和基于数据的机器学习方法。在21世纪初，随着计算能力的提升和电子健康记录（EHR）的普及，CDSS开始利用大数据进行更复杂的预测和分析。尽管这些系统在处理标准化数据方面取得了显著进展，但在解释非结构化医疗数据、适应新的临床实践和医学知识时，它们仍显示出局限性。</p>
-<h3 class="heading-element" id="22-大模型在医学领域的应用"><span>2.2 <strong>大模型在医学领域的应用</strong></span>
-  <a href="#22-%e5%a4%a7%e6%a8%a1%e5%9e%8b%e5%9c%a8%e5%8c%bb%e5%ad%a6%e9%a2%86%e5%9f%9f%e7%9a%84%e5%ba%94%e7%94%a8" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>近年来，随着深度学习技术的发展，大型预训练模型，如GPT和BERT，已经开始在医学领域中发挥作用。这些模型能够处理大量非结构化的医疗文本数据，提供更深入的见解和预测。例如，它们被用于自动化病历摘要、医学文献分析、疾病预测以及提供个性化的患者护理建议。然而，这些大型模型在处理高度专业化的医学知识时仍然面临挑战，尤其是在理解复杂医学术语和临床指南方面。</p>
-<h3 class="heading-element" id="23-医学决策的稳定性和可靠性"><span>2.3 <strong>医学决策的稳定性和可靠性</strong></span>
-  <a href="#23-%e5%8c%bb%e5%ad%a6%e5%86%b3%e7%ad%96%e7%9a%84%e7%a8%b3%e5%ae%9a%e6%80%a7%e5%92%8c%e5%8f%af%e9%9d%a0%e6%80%a7" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>尽管大型模型在处理医学数据方面显示出潜力，但其在确保决策稳定性和可靠性方面存在不足。这主要是由于这些模型在训练过程中缺乏对医学领域特定知识的深入理解。此外，这些模型通常缺乏足够的透明度，使得医疗专业人员难以理解和信任其决策过程和结果。因此，需要开发更加先进的方法来提高这些系统在医学决策中的稳定性和可靠性。</p>
-<h3 class="heading-element" id="24-chain-of-thought-cot-推理和retrieval-augmented-generation-rag-技术"><span>2.4 <strong>Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术</strong></span>
-  <a href="#24-chain-of-thought-cot-%e6%8e%a8%e7%90%86%e5%92%8cretrieval-augmented-generation-rag-%e6%8a%80%e6%9c%af" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h3><p>CoT推理技术通过模拟医生的思考过程来增强决策的逻辑性和透明度。通过将决策过程分解为一系列逻辑步骤，CoT提供了一种更加直观和可解释的方式来解释模型的推理过程。另一方面，RAG技术通过结合强大的检索能力和生成能力来增强模型对医学知识的理解。这种方法允许模型在做出决策前，先从大量医学数据中检索相关信息，从而提高其决策的准确性和深度。结合这两种技术，可以显著提高医学决策支持系统的性能，尤其是在处理复杂和非标准化的临床情况时。</p>
+<h2 id="2-相关工作"><strong>2. 相关工作</strong></h2>
+<p>本节回顾了医学决策支持系统的发展历程，以及大模型在医学领域的应用现状。我们将探讨现有模型在处理医学数据时的局限性，尤其是在稳定性和可靠性方面的不足，并分析了Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术对于提高医学决策质量的潜在贡献。</p>
+<h3 id="21-医学决策支持系统的发展">2.1 <strong>医学决策支持系统的发展</strong></h3>
+<p>医学决策支持系统（CDSS）的历史可以追溯到20世纪70年代，当时的系统主要基于规则的推理来辅助临床决策。随着时间的推移，这些系统逐渐集成了更复杂的算法，包括基于知识的系统和基于数据的机器学习方法。在21世纪初，随着计算能力的提升和电子健康记录（EHR）的普及，CDSS开始利用大数据进行更复杂的预测和分析。尽管这些系统在处理标准化数据方面取得了显著进展，但在解释非结构化医疗数据、适应新的临床实践和医学知识时，它们仍显示出局限性。</p>
+<h3 id="22-大模型在医学领域的应用">2.2 <strong>大模型在医学领域的应用</strong></h3>
+<p>近年来，随着深度学习技术的发展，大型预训练模型，如GPT和BERT，已经开始在医学领域中发挥作用。这些模型能够处理大量非结构化的医疗文本数据，提供更深入的见解和预测。例如，它们被用于自动化病历摘要、医学文献分析、疾病预测以及提供个性化的患者护理建议。然而，这些大型模型在处理高度专业化的医学知识时仍然面临挑战，尤其是在理解复杂医学术语和临床指南方面。</p>
+<h3 id="23-医学决策的稳定性和可靠性">2.3 <strong>医学决策的稳定性和可靠性</strong></h3>
+<p>尽管大型模型在处理医学数据方面显示出潜力，但其在确保决策稳定性和可靠性方面存在不足。这主要是由于这些模型在训练过程中缺乏对医学领域特定知识的深入理解。此外，这些模型通常缺乏足够的透明度，使得医疗专业人员难以理解和信任其决策过程和结果。因此，需要开发更加先进的方法来提高这些系统在医学决策中的稳定性和可靠性。</p>
+<h3 id="24-chain-of-thought-cot-推理和retrieval-augmented-generation-rag-技术">2.4 <strong>Chain of Thought (CoT) 推理和Retrieval-Augmented Generation (RAG) 技术</strong></h3>
+<p>CoT推理技术通过模拟医生的思考过程来增强决策的逻辑性和透明度。通过将决策过程分解为一系列逻辑步骤，CoT提供了一种更加直观和可解释的方式来解释模型的推理过程。另一方面，RAG技术通过结合强大的检索能力和生成能力来增强模型对医学知识的理解。这种方法允许模型在做出决策前，先从大量医学数据中检索相关信息，从而提高其决策的准确性和深度。结合这两种技术，可以显著提高医学决策支持系统的性能，尤其是在处理复杂和非标准化的临床情况时。</p>
 <p>综上所述，尽管当前的医学大模型在处理特定类型的医疗数据方面取得了进展，但在提高医学决策的稳定性和可靠性方面还有很长的路要走。</p>
-<h2 class="heading-element" id="3-medrad框架"><span><strong>3. MedRad框架</strong></span>
-  <a href="#3-medrad%e6%a1%86%e6%9e%b6" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>本节详细介绍MedRad框架的架构和工作原理。我们将解释如何结合CoT、RAG和Agent技术来挖掘大型语言模型的潜力，并描述这一多模块系统是如何协同工作以提升决策质量的。</p>
+<h2 id="3-medrad框架"><strong>3. MedRad框架</strong></h2>
+<p>本节详细介绍MedRad框架的架构和工作原理。我们将解释如何结合CoT、RAG和Agent技术来挖掘大型语言模型的潜力，并描述这一多模块系统是如何协同工作以提升决策质量的。</p>
 <p>框架图：</p>
 <p><a href="https://gitee.com/dujh22/pic/raw/master/MedRad.png"target="_blank" rel="external nofollow noopener noreferrer">https://gitee.com/dujh22/pic/raw/master/MedRad.png</a></p>
 <p>详细见本目录下的：“MedRad具体场景和代码”</p>
@@ -135,44 +323,26 @@
 <p>百度网盘链接: <a href="https://pan.baidu.com/s/1qeWx2RrwiErLc8vVXS0pBA?pwd=2024"target="_blank" rel="external nofollow noopener noreferrer">https://pan.baidu.com/s/1qeWx2RrwiErLc8vVXS0pBA?pwd=2024</a> 提取码: 2024</p>
 <p>下面是新一版本未完成的论文，后续会持续更新，请进一步关注！</p>
 <hr>
-<h2 class="heading-element" id="4-方法"><span><strong>4. 方法</strong></span>
-  <a href="#4-%e6%96%b9%e6%b3%95" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>我们将说明我们如何构建医学领域的大型语言模型，包括数据准备、预处理、模型训练和微调的步骤。此外，我们将详细描述如何应用CoT和RAG技术来辅助模型进行复杂决策。</p>
-<h2 class="heading-element" id="5-实验设计"><span><strong>5. 实验设计</strong></span>
-  <a href="#5-%e5%ae%9e%e9%aa%8c%e8%ae%be%e8%ae%a1" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>本节概述了实验的设计，包括选择的医学场景、评估标准和实验设置。我们将详细说明如何在不同复杂度的医学场景中进行实验以评估MedRad框架的效果。</p>
-<h2 class="heading-element" id="6-结果与讨论"><span><strong>6. 结果与讨论</strong></span>
-  <a href="#6-%e7%bb%93%e6%9e%9c%e4%b8%8e%e8%ae%a8%e8%ae%ba" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>这一部分将展示MedRad在各个医学场景中的实验结果，并与现有方法进行比较。我们将讨论MedRad实现高可靠性决策的能力，并分析其性能提升的关键因素。</p>
-<h2 class="heading-element" id="7-结论"><span><strong>7. 结论</strong></span>
-  <a href="#7-%e7%bb%93%e8%ae%ba" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>我们总结了MedRad框架的主要贡献和优势，并讨论了其在实际医疗环境中的应用前景。同时，我们也指出了未来工作的方向，包括如何进一步提升框架的性能和适用性。</p>
-<h2 class="heading-element" id="致谢"><span><strong>致谢</strong></span>
-  <a href="#%e8%87%b4%e8%b0%a2" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>我们感谢参与项目的所有成员和支持该研究工作的资助机构。</p>
-<h2 class="heading-element" id="参考文献"><span><strong>参考文献</strong></span>
-  <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>这里列出所有在研究过程中引用的文献。</p>
+<h2 id="4-方法"><strong>4. 方法</strong></h2>
+<p>我们将说明我们如何构建医学领域的大型语言模型，包括数据准备、预处理、模型训练和微调的步骤。此外，我们将详细描述如何应用CoT和RAG技术来辅助模型进行复杂决策。</p>
+<h2 id="5-实验设计"><strong>5. 实验设计</strong></h2>
+<p>本节概述了实验的设计，包括选择的医学场景、评估标准和实验设置。我们将详细说明如何在不同复杂度的医学场景中进行实验以评估MedRad框架的效果。</p>
+<h2 id="6-结果与讨论"><strong>6. 结果与讨论</strong></h2>
+<p>这一部分将展示MedRad在各个医学场景中的实验结果，并与现有方法进行比较。我们将讨论MedRad实现高可靠性决策的能力，并分析其性能提升的关键因素。</p>
+<h2 id="7-结论"><strong>7. 结论</strong></h2>
+<p>我们总结了MedRad框架的主要贡献和优势，并讨论了其在实际医疗环境中的应用前景。同时，我们也指出了未来工作的方向，包括如何进一步提升框架的性能和适用性。</p>
+<h2 id="致谢"><strong>致谢</strong></h2>
+<p>我们感谢参与项目的所有成员和支持该研究工作的资助机构。</p>
+<h2 id="参考文献"><strong>参考文献</strong></h2>
+<p>这里列出所有在研究过程中引用的文献。</p>
 </div></article></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.148.2"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.0-alpha-20250721024521-a1cd700b"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">
-              <a href="/"></a></span></div></div>
+    <div class="footer-container"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">Public - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span></div><div class="footer-line statistics"></div></div>
   </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
         </div></div><div id="mask"></div><noscript>
-    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+    <div class="noscript-warning">Theme FixIt works best with JavaScript enabled.</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"version":"v0.4.0-alpha-20250721024521-a1cd700b"};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-desktop":"Med-Eval 医疗大语言模型测评基准","typeit-header-title-mobile":"Med-Eval 医疗大语言模型测评基准"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-desktop":["typeit-header-desktop"],"typeit-header-title-mobile":["typeit-header-title-mobile"]},"duration":-1,"loop":false,"speed":100}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

@@ -1,19 +1,65 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>All Posts - Med-Eval</title>
     <link>https://dujh22.github.io/posts/</link>
-    <description>Med-Eval</description>
-    <generator>Hugo 0.148.2 &amp; FixIt v0.4.0-alpha-20250721024521-a1cd700b</generator>
-    <language>zh-CN</language>
-    <lastBuildDate>Wed, 20 Dec 2023 11:03:47 +0800</lastBuildDate>
-    <atom:link href="https://dujh22.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Benchmarks for the Medical Large Language Model</title>
-      <link>https://dujh22.github.io/posts/med-eval/</link>
-      <pubDate>Wed, 20 Dec 2023 11:03:47 +0800</pubDate>
-      <guid>https://dujh22.github.io/posts/med-eval/</guid>
-      <description>&lt;figure&gt;&lt;img src=&#34;https://dujh22.github.io/fixit.svg&#34;&gt;&#xA;&lt;/figure&gt;&#xA;&#xA;&lt;p&gt;&lt;strong&gt;Med-Eval&lt;/strong&gt; 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。&lt;/p&gt;&#xA;&lt;h2 class=&#34;heading-element&#34; id=&#34;-介绍&#34;&gt;&lt;span&gt;🔬 介绍&lt;/span&gt;&#xA;  &lt;a href=&#34;#-%e4%bb%8b%e7%bb%8d&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。&lt;/p&gt;&#xA;&lt;p&gt;同时，Med-Eval的目标是为医疗社区提供一套全面、可靠的工具，以评估和比较不同医学大语言模型的性能。这些模型的成功应用将直接促进了现代临床医疗的进步，为医疗专业人员提供了更多的资源和支持，以更准确、更高效地诊断疾病和提供个性化的治疗方案。&lt;/p&gt;&#xA;&lt;p&gt;此外，医学大模型的应用也将有助于提高患者的健康护理体验，使他们能够更好地理解和管理自己的健康状况，从而改善了整个医疗体系的质量和效率。因此，Med-Eval不仅是为了科学研究和技术进步，还会在改善医疗实践和服务患者方面发挥有效作用。&lt;/p&gt;&#xA;&lt;h2 class=&#34;heading-element&#34; id=&#34;-特点&#34;&gt;&lt;span&gt;⏩ 特点&lt;/span&gt;&#xA;  &lt;a href=&#34;#-%e7%89%b9%e7%82%b9&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;Med-Eval具有如下特点：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;全球覆盖&lt;/strong&gt;： Med-Eval不仅关注一种语言或地区的医学模型，它致力于全球范围内的医学大语言模型。它汇总了来自世界各地的医学大模型，从而确保覆盖不同语言和文化背景的医学知识。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;综合性评估&lt;/strong&gt;： Med-Eval采用详尽的测试方法，包括语言理解、文本生成、信息提取等多个方面的评估，以确保对医学大语言模型的性能有全面而深入的了解。这有助于识别每个模型在不同任务和领域中的强项和弱点。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;模型生态的构建&lt;/strong&gt;： 通过比较和评估各种医学大语言模型，Med-Eval的目标之一是帮助构建一个更加强大和多样化的医学大模型生态系统。这将有助于医学领域的研究、临床实践和医疗决策制定，为人类医学的进步提供有力支持。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;群体智能和医学便利&lt;/strong&gt;： Med-Eval不仅仅关注模型的性能，还强调了医学大模型在促进人类医学便利和进步方面的潜力。通过整合智能的医学大模型，医疗专业人员可以更轻松地获取信息、做出决策，并提供更好的患者护理。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 class=&#34;heading-element&#34; id=&#34;-结构&#34;&gt;&lt;span&gt;⏩ 结构&lt;/span&gt;&#xA;  &lt;a href=&#34;#-%e7%bb%93%e6%9e%84&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;MedEval&lt;/strong&gt; 主要由如下几部分构成：&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;模型榜单&lt;/strong&gt;：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;通用大模型榜单&lt;/strong&gt;：此部分列出了各种通用自然语言处理大语言模型，这些模型不仅在通用NLP任务中表现出色，还在医学领域有潜力应用。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;医学大模型榜单&lt;/strong&gt;：这个榜单汇总了专门用于医学领域的大语言模型。这些模型针对医学数据和任务进行了优化，以提供更准确的结果。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;数据集榜单&lt;/strong&gt;：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;医学大模型用知识库榜单&lt;/strong&gt;：此部分列出了在医学大语言模型的训练和评估中常用的知识库和数据资源。这些知识库包含了医学领域的关键信息，可用于提高模型的性能。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;医学大模型训练用语料库榜单&lt;/strong&gt;：这个榜单包括了在训练医学大语言模型时使用的语料库和数据集。这些数据集是为了训练模型以适应医学文本和术语。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;测评工具榜单&lt;/strong&gt;：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;通用大模型测评工具榜单&lt;/strong&gt;：在这里，列出了用于评估通用自然语言处理大语言模型性能的各种测评工具，例如文本分类、语言生成等。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Med-Eval测评方法&lt;/strong&gt;：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;这一部分详细描述了MedEval所采用的测评方法和标准。这包括用于评估模型性能的指标、评估任务的定义以及评估过程的步骤。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;医学大模型适用场景榜单&lt;/strong&gt;：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;此部分提供了医学大语言模型在不同医学应用场景中的适用性评估。这有助于医疗专业人员了解何时以及如何使用这些模型来解决特定的医学问题。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 class=&#34;heading-element&#34; id=&#34;-引文&#34;&gt;&lt;span&gt;😜 引文&lt;/span&gt;&#xA;  &lt;a href=&#34;#-%e5%bc%95%e6%96%87&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。&lt;/p&gt;&#xA;&lt;h2 class=&#34;heading-element&#34; id=&#34;-联系我们&#34;&gt;&lt;span&gt;🌏 联系我们&lt;/span&gt;&#xA;  &lt;a href=&#34;#-%e8%81%94%e7%b3%bb%e6%88%91%e4%bb%ac&#34; class=&#34;heading-mark&#34;&gt;&#xA;    &lt;svg class=&#34;octicon octicon-link&#34; viewBox=&#34;0 0 16 16&#34; version=&#34;1.1&#34; width=&#34;16&#34; height=&#34;16&#34; aria-hidden=&#34;true&#34;&gt;&lt;path d=&#34;m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z&#34;&gt;&lt;/path&gt;&lt;/svg&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&lt;p&gt;对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。&lt;/p&gt;</description>
-    </item>
-  </channel>
+    <description>All Posts | Med-Eval</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 Dec 2023 11:03:47 &#43;0800</lastBuildDate><atom:link href="https://dujh22.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>Benchmarks for the Medical Large Language Model</title>
+  <link>https://dujh22.github.io/posts/med-eval/</link>
+  <pubDate>Wed, 20 Dec 2023 11:03:47 &#43;0800</pubDate>
+  <author>Author</author>
+  <guid>https://dujh22.github.io/posts/med-eval/</guid>
+  <description><![CDATA[<figure><img src="/fixit.svg">
+</figure>
+
+<p><strong>Med-Eval</strong> 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。</p>
+<h2 id="-介绍">🔬 介绍</h2>
+<p>Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。</p>
+<p>同时，Med-Eval的目标是为医疗社区提供一套全面、可靠的工具，以评估和比较不同医学大语言模型的性能。这些模型的成功应用将直接促进了现代临床医疗的进步，为医疗专业人员提供了更多的资源和支持，以更准确、更高效地诊断疾病和提供个性化的治疗方案。</p>
+<p>此外，医学大模型的应用也将有助于提高患者的健康护理体验，使他们能够更好地理解和管理自己的健康状况，从而改善了整个医疗体系的质量和效率。因此，Med-Eval不仅是为了科学研究和技术进步，还会在改善医疗实践和服务患者方面发挥有效作用。</p>
+<h2 id="-特点">⏩ 特点</h2>
+<p>Med-Eval具有如下特点：</p>
+<ol>
+<li><strong>全球覆盖</strong>： Med-Eval不仅关注一种语言或地区的医学模型，它致力于全球范围内的医学大语言模型。它汇总了来自世界各地的医学大模型，从而确保覆盖不同语言和文化背景的医学知识。</li>
+<li><strong>综合性评估</strong>： Med-Eval采用详尽的测试方法，包括语言理解、文本生成、信息提取等多个方面的评估，以确保对医学大语言模型的性能有全面而深入的了解。这有助于识别每个模型在不同任务和领域中的强项和弱点。</li>
+<li><strong>模型生态的构建</strong>： 通过比较和评估各种医学大语言模型，Med-Eval的目标之一是帮助构建一个更加强大和多样化的医学大模型生态系统。这将有助于医学领域的研究、临床实践和医疗决策制定，为人类医学的进步提供有力支持。</li>
+<li><strong>群体智能和医学便利</strong>： Med-Eval不仅仅关注模型的性能，还强调了医学大模型在促进人类医学便利和进步方面的潜力。通过整合智能的医学大模型，医疗专业人员可以更轻松地获取信息、做出决策，并提供更好的患者护理。</li>
+</ol>
+<h2 id="-结构">⏩ 结构</h2>
+<p><strong>MedEval</strong> 主要由如下几部分构成：</p>
+<ol>
+<li><strong>模型榜单</strong>：
+<ul>
+<li><strong>通用大模型榜单</strong>：此部分列出了各种通用自然语言处理大语言模型，这些模型不仅在通用NLP任务中表现出色，还在医学领域有潜力应用。</li>
+<li><strong>医学大模型榜单</strong>：这个榜单汇总了专门用于医学领域的大语言模型。这些模型针对医学数据和任务进行了优化，以提供更准确的结果。</li>
+</ul>
+</li>
+<li><strong>数据集榜单</strong>：
+<ul>
+<li><strong>医学大模型用知识库榜单</strong>：此部分列出了在医学大语言模型的训练和评估中常用的知识库和数据资源。这些知识库包含了医学领域的关键信息，可用于提高模型的性能。</li>
+<li><strong>医学大模型训练用语料库榜单</strong>：这个榜单包括了在训练医学大语言模型时使用的语料库和数据集。这些数据集是为了训练模型以适应医学文本和术语。</li>
+</ul>
+</li>
+<li><strong>测评工具榜单</strong>：
+<ul>
+<li><strong>通用大模型测评工具榜单</strong>：在这里，列出了用于评估通用自然语言处理大语言模型性能的各种测评工具，例如文本分类、语言生成等。</li>
+</ul>
+</li>
+<li><strong>Med-Eval测评方法</strong>：
+<ul>
+<li>这一部分详细描述了MedEval所采用的测评方法和标准。这包括用于评估模型性能的指标、评估任务的定义以及评估过程的步骤。</li>
+</ul>
+</li>
+<li><strong>医学大模型适用场景榜单</strong>：
+<ul>
+<li>此部分提供了医学大语言模型在不同医学应用场景中的适用性评估。这有助于医疗专业人员了解何时以及如何使用这些模型来解决特定的医学问题。</li>
+</ul>
+</li>
+</ol>
+<h2 id="-引文">😜 引文</h2>
+<p>此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。</p>
+<h2 id="-联系我们">🌏 联系我们</h2>
+<p>对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。</p>]]></description>
+</item>
+</channel>
 </rss>

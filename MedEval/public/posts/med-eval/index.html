@@ -6,15 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <meta name="robots" content="noodp" />
     <title>Benchmarks for the Medical Large Language Model - Med-Eval</title><meta name="author" content="">
-<meta name="description" content=" Med-Eval 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。
-🔬 介绍 Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。
+<meta name="author-link" content="">
+<meta name="description" content="
+
+
+Med-Eval 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。
+🔬 介绍
+Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。
 同时，Med-Eval的目标是为医疗社区提供一套全面、可靠的工具，以评估和比较不同医学大语言模型的性能。这些模型的成功应用将直接促进了现代临床医疗的进步，为医疗专业人员提供了更多的资源和支持，以更准确、更高效地诊断疾病和提供个性化的治疗方案。
 此外，医学大模型的应用也将有助于提高患者的健康护理体验，使他们能够更好地理解和管理自己的健康状况，从而改善了整个医疗体系的质量和效率。因此，Med-Eval不仅是为了科学研究和技术进步，还会在改善医疗实践和服务患者方面发挥有效作用。
-⏩ 特点 Med-Eval具有如下特点：
-全球覆盖： Med-Eval不仅关注一种语言或地区的医学模型，它致力于全球范围内的医学大语言模型。它汇总了来自世界各地的医学大模型，从而确保覆盖不同语言和文化背景的医学知识。 综合性评估： Med-Eval采用详尽的测试方法，包括语言理解、文本生成、信息提取等多个方面的评估，以确保对医学大语言模型的性能有全面而深入的了解。这有助于识别每个模型在不同任务和领域中的强项和弱点。 模型生态的构建： 通过比较和评估各种医学大语言模型，Med-Eval的目标之一是帮助构建一个更加强大和多样化的医学大模型生态系统。这将有助于医学领域的研究、临床实践和医疗决策制定，为人类医学的进步提供有力支持。 群体智能和医学便利： Med-Eval不仅仅关注模型的性能，还强调了医学大模型在促进人类医学便利和进步方面的潜力。通过整合智能的医学大模型，医疗专业人员可以更轻松地获取信息、做出决策，并提供更好的患者护理。 ⏩ 结构 MedEval 主要由如下几部分构成：
-模型榜单： 通用大模型榜单：此部分列出了各种通用自然语言处理大语言模型，这些模型不仅在通用NLP任务中表现出色，还在医学领域有潜力应用。 医学大模型榜单：这个榜单汇总了专门用于医学领域的大语言模型。这些模型针对医学数据和任务进行了优化，以提供更准确的结果。 数据集榜单： 医学大模型用知识库榜单：此部分列出了在医学大语言模型的训练和评估中常用的知识库和数据资源。这些知识库包含了医学领域的关键信息，可用于提高模型的性能。 医学大模型训练用语料库榜单：这个榜单包括了在训练医学大语言模型时使用的语料库和数据集。这些数据集是为了训练模型以适应医学文本和术语。 测评工具榜单： 通用大模型测评工具榜单：在这里，列出了用于评估通用自然语言处理大语言模型性能的各种测评工具，例如文本分类、语言生成等。 Med-Eval测评方法： 这一部分详细描述了MedEval所采用的测评方法和标准。这包括用于评估模型性能的指标、评估任务的定义以及评估过程的步骤。 医学大模型适用场景榜单： 此部分提供了医学大语言模型在不同医学应用场景中的适用性评估。这有助于医疗专业人员了解何时以及如何使用这些模型来解决特定的医学问题。 😜 引文 此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。
-🌏 联系我们 对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。
-">
+⏩ 特点
+Med-Eval具有如下特点：
+
+全球覆盖： Med-Eval不仅关注一种语言或地区的医学模型，它致力于全球范围内的医学大语言模型。它汇总了来自世界各地的医学大模型，从而确保覆盖不同语言和文化背景的医学知识。
+综合性评估： Med-Eval采用详尽的测试方法，包括语言理解、文本生成、信息提取等多个方面的评估，以确保对医学大语言模型的性能有全面而深入的了解。这有助于识别每个模型在不同任务和领域中的强项和弱点。
+模型生态的构建： 通过比较和评估各种医学大语言模型，Med-Eval的目标之一是帮助构建一个更加强大和多样化的医学大模型生态系统。这将有助于医学领域的研究、临床实践和医疗决策制定，为人类医学的进步提供有力支持。
+群体智能和医学便利： Med-Eval不仅仅关注模型的性能，还强调了医学大模型在促进人类医学便利和进步方面的潜力。通过整合智能的医学大模型，医疗专业人员可以更轻松地获取信息、做出决策，并提供更好的患者护理。
+
+⏩ 结构
+MedEval 主要由如下几部分构成：
+
+模型榜单：
+
+通用大模型榜单：此部分列出了各种通用自然语言处理大语言模型，这些模型不仅在通用NLP任务中表现出色，还在医学领域有潜力应用。
+医学大模型榜单：这个榜单汇总了专门用于医学领域的大语言模型。这些模型针对医学数据和任务进行了优化，以提供更准确的结果。
+
+
+数据集榜单：
+
+医学大模型用知识库榜单：此部分列出了在医学大语言模型的训练和评估中常用的知识库和数据资源。这些知识库包含了医学领域的关键信息，可用于提高模型的性能。
+医学大模型训练用语料库榜单：这个榜单包括了在训练医学大语言模型时使用的语料库和数据集。这些数据集是为了训练模型以适应医学文本和术语。
+
+
+测评工具榜单：
+
+通用大模型测评工具榜单：在这里，列出了用于评估通用自然语言处理大语言模型性能的各种测评工具，例如文本分类、语言生成等。
+
+
+Med-Eval测评方法：
+
+这一部分详细描述了MedEval所采用的测评方法和标准。这包括用于评估模型性能的指标、评估任务的定义以及评估过程的步骤。
+
+
+医学大模型适用场景榜单：
+
+此部分提供了医学大语言模型在不同医学应用场景中的适用性评估。这有助于医疗专业人员了解何时以及如何使用这些模型来解决特定的医学问题。
+
+
+
+😜 引文
+此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。
+🌏 联系我们
+对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。" /><meta name="keywords" content='Hugo, FixIt' />
   <meta itemprop="name" content="Benchmarks for the Medical Large Language Model">
   <meta itemprop="description" content="Med-Eval 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。
 🔬 介绍 Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。
@@ -53,10 +96,10 @@
 全球覆盖： Med-Eval不仅关注一种语言或地区的医学模型，它致力于全球范围内的医学大语言模型。它汇总了来自世界各地的医学大模型，从而确保覆盖不同语言和文化背景的医学知识。 综合性评估： Med-Eval采用详尽的测试方法，包括语言理解、文本生成、信息提取等多个方面的评估，以确保对医学大语言模型的性能有全面而深入的了解。这有助于识别每个模型在不同任务和领域中的强项和弱点。 模型生态的构建： 通过比较和评估各种医学大语言模型，Med-Eval的目标之一是帮助构建一个更加强大和多样化的医学大模型生态系统。这将有助于医学领域的研究、临床实践和医疗决策制定，为人类医学的进步提供有力支持。 群体智能和医学便利： Med-Eval不仅仅关注模型的性能，还强调了医学大模型在促进人类医学便利和进步方面的潜力。通过整合智能的医学大模型，医疗专业人员可以更轻松地获取信息、做出决策，并提供更好的患者护理。 ⏩ 结构 MedEval 主要由如下几部分构成：
 模型榜单： 通用大模型榜单：此部分列出了各种通用自然语言处理大语言模型，这些模型不仅在通用NLP任务中表现出色，还在医学领域有潜力应用。 医学大模型榜单：这个榜单汇总了专门用于医学领域的大语言模型。这些模型针对医学数据和任务进行了优化，以提供更准确的结果。 数据集榜单： 医学大模型用知识库榜单：此部分列出了在医学大语言模型的训练和评估中常用的知识库和数据资源。这些知识库包含了医学领域的关键信息，可用于提高模型的性能。 医学大模型训练用语料库榜单：这个榜单包括了在训练医学大语言模型时使用的语料库和数据集。这些数据集是为了训练模型以适应医学文本和术语。 测评工具榜单： 通用大模型测评工具榜单：在这里，列出了用于评估通用自然语言处理大语言模型性能的各种测评工具，例如文本分类、语言生成等。 Med-Eval测评方法： 这一部分详细描述了MedEval所采用的测评方法和标准。这包括用于评估模型性能的指标、评估任务的定义以及评估过程的步骤。 医学大模型适用场景榜单： 此部分提供了医学大语言模型在不同医学应用场景中的适用性评估。这有助于医疗专业人员了解何时以及如何使用这些模型来解决特定的医学问题。 😜 引文 此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。
 🌏 联系我们 对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。">
-<meta name="application-name" content="FixIt">
-<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="application-name" content="Med-Eval">
+<meta name="apple-mobile-web-app-title" content="Med-Eval"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" type="text/html" href="https://dujh22.github.io/posts/med-eval/" title="Benchmarks for the Medical Large Language Model - Med-Eval" /><link rel="prev" type="text/html" href="https://dujh22.github.io/model/%E5%85%A8%E7%90%83%E5%BC%80%E6%BA%90%E5%BC%80%E6%94%BE%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B1%95%E6%83%85%E5%86%B5/" title="全球开源开放大模型发展情况" /><link rel="next" type="text/html" href="https://dujh22.github.io/model/%E9%80%9A%E7%94%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%A6%9C%E5%8D%95/" title="通用大模型榜单" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dujh22.github.io/posts/med-eval/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
   {
@@ -72,16 +115,77 @@
       "@type": "Organization",
       "name": ""},"description": ""
   }
-  </script><script src="/js/head/color-scheme.min.js"></script></head>
-  <body data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
-      <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+      <a href="/" title="Med-Eval"><img loading="lazy" src="/fixit.svg" data-title="Med-Eval" data-alt="Med-Eval" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span id="typeit-header-desktop" class="typeit"></span></a><span class="header-subtitle"></span></div>
     <nav>
       <ul class="menu"><li class="menu-item">
-              <a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item">
-              <a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
-              <a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+              <a
+                class="menu-link"
+                href="/posts/med-eval"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 详情</a></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="/board"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 榜单</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/model/"
+                          
+                          
+                        >模型榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/data/"
+                          
+                          
+                        >数据榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7"
+                          
+                          
+                        >测评工具</a>
+                      </li></ul></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="https://www.opende.org.cn/arena/"
+                
+                rel="noopener noreferrer" target="_blank"
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 竞技场</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="https://www.opende.org.cn/demo/chat"
+                          
+                          rel="noopener noreferrer" target="_blank"
+                        ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> AiMed</a>
+                      </li></ul></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/more"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 加入竞技</a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
           <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
         </li></ul>
     </nav>
@@ -90,24 +194,103 @@
   <div class="header-container">
     <div class="header-wrapper">
       <div class="header-title">
-        <a href="/" title="Med-Eval"><span class="header-title-text">Med-Eval</span></a><span class="header-subtitle"></span></div>
+        <a href="/" title="Med-Eval"><img loading="lazy" src="/fixit.svg" data-title="/fixit.svg" data-alt="/fixit.svg" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/><span id="typeit-header-title-mobile" class="typeit"></span></a><span class="header-subtitle"></span></div>
       <div class="menu-toggle" id="menu-toggle-mobile">
         <span></span><span></span><span></span>
       </div>
     </div>
     <nav>
-      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/"><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Archives</a></li><li class="menu-item"><a class="menu-link" href="/categories/"><i class="fa-solid fa-folder-tree fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item"><a class="menu-link" href="/tags/"><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item menu-system">
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/med-eval"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 详情</a></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="/board"
+                    
+                    
+                  ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 榜单</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/model/"
+                          
+                          
+                        >模型榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/data/"
+                          
+                          
+                        >数据榜单</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/tool/%E6%B5%8B%E8%AF%84%E5%B7%A5%E5%85%B7"
+                          
+                          
+                        >测评工具</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="https://www.opende.org.cn/arena/"
+                    
+                    rel="noopener noreferrer" target="_blank"
+                  ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 竞技场</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="https://www.opende.org.cn/demo/chat"
+                          
+                          rel="noopener noreferrer" target="_blank"
+                        ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> AiMed</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/more"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 加入竞技</a></li><li class="menu-item menu-system">
           <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
       </ul>
     </nav>
   </div>
-</header><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+</header><main class="container"><aside class="toc" id="toc-auto"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
 
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid fa-share fa-fw" aria-hidden="true"></i></span><span>Benchmarks for the Medical Large Language Model</span>
       </h1></div><div class="post-meta">
       <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
-      Anonymous</span></span></div><div class="post-meta-line"><span title="published on 2023-12-20 11:03:47"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2023-12-20">2023-12-20</time></span>&nbsp;<span title="41 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 100 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
+      </span></span></div>
+      <div class="post-meta-line"><span title="published on 2023-12-20 11:03:47"><i class="fa-regular fa-calendar-alt fa-fw me-1" aria-hidden="true"></i><time datetime="2023-12-20">2023-12-20</time></span>&nbsp;<span title="Updated on 2023-12-20 11:03:47"><i class="fa-regular fa-edit fa-fw me-1" aria-hidden="true"></i><time datetime="2023-12-20">2023-12-20</time></span>&nbsp;<span title="41 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 100 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -126,29 +309,20 @@
 </figure>
 
 <p><strong>Med-Eval</strong> 是一个全球性、多维度的医学大语言模型测评基准，旨在推动医学领域的技术进步和人类医学的发展，以满足不断增长的信息处理和医疗需求。它试图为医学大模型的研究、应用和创新提供资源和指导。</p>
-<h2 class="heading-element" id="-介绍"><span>🔬 介绍</span>
-  <a href="#-%e4%bb%8b%e7%bb%8d" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。</p>
+<h2 id="-介绍">🔬 介绍</h2>
+<p>Med-Eval的创建是为了满足当今医学领域对自然语言处理和人工智能技术的迫切需求。在医学领域，信息爆炸性增长，大数据和临床文档的数量呈指数级增长，因此需要强大的语言模型来处理和分析这些信息。</p>
 <p>同时，Med-Eval的目标是为医疗社区提供一套全面、可靠的工具，以评估和比较不同医学大语言模型的性能。这些模型的成功应用将直接促进了现代临床医疗的进步，为医疗专业人员提供了更多的资源和支持，以更准确、更高效地诊断疾病和提供个性化的治疗方案。</p>
 <p>此外，医学大模型的应用也将有助于提高患者的健康护理体验，使他们能够更好地理解和管理自己的健康状况，从而改善了整个医疗体系的质量和效率。因此，Med-Eval不仅是为了科学研究和技术进步，还会在改善医疗实践和服务患者方面发挥有效作用。</p>
-<h2 class="heading-element" id="-特点"><span>⏩ 特点</span>
-  <a href="#-%e7%89%b9%e7%82%b9" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>Med-Eval具有如下特点：</p>
+<h2 id="-特点">⏩ 特点</h2>
+<p>Med-Eval具有如下特点：</p>
 <ol>
 <li><strong>全球覆盖</strong>： Med-Eval不仅关注一种语言或地区的医学模型，它致力于全球范围内的医学大语言模型。它汇总了来自世界各地的医学大模型，从而确保覆盖不同语言和文化背景的医学知识。</li>
 <li><strong>综合性评估</strong>： Med-Eval采用详尽的测试方法，包括语言理解、文本生成、信息提取等多个方面的评估，以确保对医学大语言模型的性能有全面而深入的了解。这有助于识别每个模型在不同任务和领域中的强项和弱点。</li>
 <li><strong>模型生态的构建</strong>： 通过比较和评估各种医学大语言模型，Med-Eval的目标之一是帮助构建一个更加强大和多样化的医学大模型生态系统。这将有助于医学领域的研究、临床实践和医疗决策制定，为人类医学的进步提供有力支持。</li>
 <li><strong>群体智能和医学便利</strong>： Med-Eval不仅仅关注模型的性能，还强调了医学大模型在促进人类医学便利和进步方面的潜力。通过整合智能的医学大模型，医疗专业人员可以更轻松地获取信息、做出决策，并提供更好的患者护理。</li>
 </ol>
-<h2 class="heading-element" id="-结构"><span>⏩ 结构</span>
-  <a href="#-%e7%bb%93%e6%9e%84" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p><strong>MedEval</strong> 主要由如下几部分构成：</p>
+<h2 id="-结构">⏩ 结构</h2>
+<p><strong>MedEval</strong> 主要由如下几部分构成：</p>
 <ol>
 <li><strong>模型榜单</strong>：
 <ul>
@@ -178,48 +352,42 @@
 </ul>
 </li>
 </ol>
-<h2 class="heading-element" id="-引文"><span>😜 引文</span>
-  <a href="#-%e5%bc%95%e6%96%87" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。</p>
-<h2 class="heading-element" id="-联系我们"><span>🌏 联系我们</span>
-  <a href="#-%e8%81%94%e7%b3%bb%e6%88%91%e4%bb%ac" class="heading-mark">
-    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-  </a>
-</h2><p>对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。</p></div><div class="post-footer" id="post-footer">
+<h2 id="-引文">😜 引文</h2>
+<p>此项目中的代码（训练、服务和评估）主要是为下面的论文开发或派生的。 如果您觉得有帮助，请引用它。我们还计划将更多的研究添加到这个项目中。</p>
+<h2 id="-联系我们">🌏 联系我们</h2>
+<p>对Med-Eval有任何疑问或者需潜在的合作，请邮件联系。</p></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">
         <span title="Updated on 2023-12-20 11:03:47">Updated on 2023-12-20&nbsp;</span>
-      </div></div><div class="post-info-line">
-        <div class="post-info-md"></div>
-        <div class="post-info-share">
-          <span><a href="javascript:void(0);" title="Share on X" data-sharer="twitter" data-url="https://dujh22.github.io/posts/med-eval/" data-title="Benchmarks for the Medical Large Language Model"><i class="fa-brands fa-x-twitter fa-fw" aria-hidden="true"></i></a>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://dujh22.github.io/posts/med-eval/" data-title="Benchmarks for the Medical Large Language Model"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
   <a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://dujh22.github.io/posts/med-eval/"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
   <a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://dujh22.github.io/posts/med-eval/" data-title="Benchmarks for the Medical Large Language Model"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
   </span>
-        </div>
-      </div></div>
+      </div>
+    </div>
+  </div>
 
   <div class="post-info-more">
     <section class="post-tags"></section>
     <section>
       <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
     </section>
-  </div><div class="post-nav"></div>
-</div>
-</article>
+  </div>
 
-  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
-      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
-    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.148.2"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.4.0-alpha-20250721024521-a1cd700b"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
-        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
-            <span itemprop="copyrightYear">2025</span><span class="author" itemprop="copyrightHolder">
-              <a href="/"></a></span></div></div>
+  <div class="post-nav"></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">Public - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span></div><div class="footer-line statistics"></div></div>
   </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
         </div></div><div id="mask"></div><noscript>
-    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+    <div class="noscript-warning">Theme FixIt works best with JavaScript enabled.</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"version":"v0.4.0-alpha-20250721024521-a1cd700b"};</script><script src="/js/theme.min.js" defer></script></body>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-header-desktop":"Med-Eval 医疗大语言模型测评基准","typeit-header-title-mobile":"Med-Eval 医疗大语言模型测评基准"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-desktop":["typeit-header-desktop"],"typeit-header-title-mobile":["typeit-header-title-mobile"]},"duration":-1,"loop":false,"speed":100}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>
